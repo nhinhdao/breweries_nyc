@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Icon, Input, Grid, Button} from 'semantic-ui-react';
 import ListBreweries from '../components/ListBreweries';
 import Brewery from '../components/Brewery';
+import {connect} from 'react-redux';
+import {getNYCBreweries, searchBreweriesByName, searchBreweriesByType} from '../actions/HandleAPIs';
 
 const list = [
   {
@@ -66,12 +68,13 @@ const list = [
   }
 ]
 
-export class GetBreweries extends Component {
+class GetBreweries extends Component {
   constructor () {
     super();
     this.state = {
       name: '',
       type: '',
+      brewery: null,
       byName: false,
       byType: false
     };
@@ -95,6 +98,11 @@ export class GetBreweries extends Component {
 
   searchByType = () => {
     console.log(this.state.type);
+  }
+
+  getBreweryOnClick = (id) => {
+    const place = list.find(place => place.id === id)
+    this.setState({brewery: place})
   }
 
   render() {
@@ -129,11 +137,13 @@ export class GetBreweries extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row stretched>
-            <Grid.Column width={4}>
-              <ListBreweries breweries={list} />
+            <Grid.Column width={6}>
+              <ListBreweries breweries={list} getBrewery={this.getBreweryOnClick}/>
             </Grid.Column>
-            <Grid.Column width={8}>
-              <Brewery brewery={list} />
+            <Grid.Column width={10}>
+              {this.state.brewery &&
+                <Brewery brewery={this.state.brewery} />
+              }
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -142,4 +152,21 @@ export class GetBreweries extends Component {
   }
 }
 
-export default GetBreweries
+
+const mapStateToProps = state => {
+  return {
+    nycBrewries: state.allBreweries,
+    breweriesByName: state.breweriesByName,
+    breweriesByType: state.breweriesByType
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getNYCBreweries: () => dispatch(getNYCBreweries()),
+    searchBreweriesByName: name => dispatch(searchBreweriesByName(name)),
+    searchBreweriesByType: type => dispatch(searchBreweriesByType(type))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GetBreweries);

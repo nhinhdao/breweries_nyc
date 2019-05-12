@@ -1,31 +1,26 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux';
-import {getNYCBreweries, searchBreweriesByName, searchBreweriesByType} from '../actions/HandleAPIs';
+import {List, Header, Segment, Icon} from 'semantic-ui-react';
 
 class ListBreweries extends Component {
+
   render() {
     return (
-      <div>
-        
-      </div>
+      <Segment className='listPlaces'>
+        <List divided animated verticalAlign='middle' id='listData'>
+          {this.props.breweries.map(place =>
+            <List.Item key={place.id}>
+              <List.Content onClick={() => this.props.getBrewery(place.id)}>
+                <Header as='h4' color='blue'>{place.name}</Header>
+                <List.Description><Icon name='tag' /> {place.brewery_type}</List.Description>
+                <List.Description><Icon name='map marker alternate' /> {place.address}</List.Description>
+              </List.Content>
+              <List.Content><Icon name='linkify' /><a href={`${place.website_url}`}> {place.website_url}</a></List.Content>
+            </List.Item>
+          )}
+        </List>
+      </Segment>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    nycBrewries: state.allBreweries,
-    breweriesByName: state.breweriesByName,
-    breweriesByType: state.breweriesByType
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getNYCBreweries: () => dispatch(getNYCBreweries()),
-    searchBreweriesByName: name => dispatch(searchBreweriesByName(name)),
-    searchBreweriesByType: type => dispatch(searchBreweriesByType(type))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ListBreweries);
+export default ListBreweries;
