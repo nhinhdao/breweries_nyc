@@ -1,7 +1,8 @@
 import React from 'react';
-import {Feed, Header, Icon} from 'semantic-ui-react';
+import {Feed, Header, Icon, Popup} from 'semantic-ui-react';
 
-export default function RenderBrewery({brewery}) {
+export function RenderBrewery({brewery}) {
+  
   return (
     <Feed>
       <Feed.Event>
@@ -18,5 +19,20 @@ export default function RenderBrewery({brewery}) {
         </Feed.Content>
       </Feed.Event>
     </Feed>
+  )
+}
+
+
+export function Marker({brewery}) {
+  return (
+    <Popup
+      trigger={<Icon size='big' color='red' name='map marker alternate' />}
+      content={
+        <RenderBrewery brewery={brewery} />
+      }
+      on='click'
+      wide='very'
+      position='bottom center'
+    />
   )
 }
