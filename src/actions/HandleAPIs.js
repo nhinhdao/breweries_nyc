@@ -29,3 +29,13 @@ export function searchBreweriesByType(type) {
       .catch(error => console.log(error));
   }
 }
+
+export function getSuggestionFromDB(query) {
+  const url = `https://api.openbrewerydb.org/breweries/autocomplete?query=${query}`
+  return dispatch => {
+    dispatch({type: "LOADING_QUERY"});
+    return axios.get(url)
+      .then(resp => dispatch({type: 'GET_SUGGESTION', payload: resp.data}))
+      .catch(error => console.log(error));
+  }
+}

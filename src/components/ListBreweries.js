@@ -39,10 +39,10 @@ class ListBreweries extends Component {
             <List.Item key={place.id}>
               <List.Content onClick={() => getBrewery(place.id)}>
                 <Header as='h4' color='blue'>{place.name}</Header>
-                <List.Description><Icon name='tag' /> {place.brewery_type}</List.Description>
-                <List.Description><Icon name='map marker alternate' /> {place.address}</List.Description>
+                <List.Description><Icon name='caret right' size='tiny'/> Type: {place.brewery_type}</List.Description>
+                <List.Description><Icon name='caret right' size='tiny'/> {place.address}</List.Description>
               </List.Content>
-              <List.Content><Icon name='linkify' /><a href={`${place.website_url}`}> {place.website_url}</a></List.Content>
+              <List.Content><Icon name='caret right' size='tiny'/><a href={`${place.website_url}`}> {place.website_url}</a></List.Content>
             </List.Item>
           )}
         </List>

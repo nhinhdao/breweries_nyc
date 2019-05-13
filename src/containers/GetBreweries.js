@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import GoogleMapReact from 'google-map-react';
 import {getNYCBreweries, searchBreweriesByName, searchBreweriesByType} from '../actions/HandleAPIs';
 import {Marker} from '../components/RenderBrewery';
+import NameSuggestion from './NameSuggestion';
+import TypeSuggestion from './TypeSuggestion';
 
 class GetBreweries extends Component {
   constructor () {
@@ -16,7 +18,10 @@ class GetBreweries extends Component {
       breweries: [],
       brewery: null,
       byName: false,
-      byType: false
+      byType: false,
+      byList: false,
+      byMap: true,
+      error: false,
     };
     this.searchByName = this.searchByName.bind(this);
     this.searchByType = this.searchByType.bind(this);
@@ -41,12 +46,22 @@ class GetBreweries extends Component {
 
   async searchByName() {
     await this.props.searchBreweriesByName(this.state.name);
-    this.setState({brewery: null, breweries: this.props.breweriesByName})
+    if (this.props.breweriesByName.length === 0) {
+      this.setState({brewery: null, breweries: [], error: true})
+    }
+    else {
+      this.setState({brewery: null, breweries: this.props.breweriesByName, byMap: false, byList: false})
+    }
   }
 
   async searchByType() {
     await this.props.searchBreweriesByType(this.state.type);
-    this.setState({brewery: null, breweries: this.props.breweriesByType})
+    if (this.props.breweriesByType.length === 0) {
+      this.setState({brewery: null, breweries: [], error: true})
+    }
+    else {
+      this.setState({brewery: null, breweries: this.props.breweriesByType, byMap: false, byList: false})
+    }
   }
 
   getBreweryOnClick = (id) => {
@@ -55,12 +70,11 @@ class GetBreweries extends Component {
   }
 
   getBreweries = () => {
-    this.setState({brewery: null, breweries: this.props.nycBreweries})
+    this.setState({brewery: null, breweries: this.props.nycBreweries, byName: false, byType: false, byMap: false})
   }
 
-  toggleBreweryCard = (id) => {
-    const place = this.state.breweries.find(place => place.id === id)
-    console.log(place)
+  getMap = () => {
+    this.setState({brewery: null, byMap: true, byName: false, byType: false, byList: false, error: false})
   }
 
   render() {
@@ -70,9 +84,11 @@ class GetBreweries extends Component {
           <Grid.Row textAlign='center' className='searchPage' >
             <Grid.Column>
               <Button color='olive' onClick={this.getBreweries}>New York Breweries</Button>
-              <Button color='green' onClick={this.getMap}>View Map</Button>
+              <Button color='green' onClick={this.getMap}>Breweries Map</Button>
               <Button color='blue' onClick={this.toggleSearchName}>Breweries by name</Button>
               <Button color='teal' onClick={this.toggleSearchType}>Breweries by type</Button>
+              <NameSuggestion />
+              <TypeSuggestion />
               {this.state.byName &&
                 <Input
                   label='Enter name'
@@ -96,10 +112,12 @@ class GetBreweries extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row stretched>
-            {this.state.breweries.length > 0 ?
+            { (this.state.breweries.length > 0 && !this.state.byMap) &&
               <Grid.Column width={6}>
                 <ListBreweries breweries={this.state.breweries} getBrewery={this.getBreweryOnClick} />
-              </Grid.Column> :
+              </Grid.Column>
+            }
+            { (this.state.error && this.state.breweries.length === 0) &&
               <Grid.Column width={16} textAlign='center'>
                 <Message negative>Brewery not found. Please try again!</Message>
               </Grid.Column> 
@@ -111,22 +129,24 @@ class GetBreweries extends Component {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <div style={{height: '800px', width: '100%'}}>
-              <GoogleMapReact
-                bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
-                defaultCenter={{lat: 42.165726, lng: -74.948051}}
-                defaultZoom={7}
-              >
-                {this.state.breweries.map(place => 
-                  <Marker
-                    key={place.id}
-                    lat={place.latitude}
-                    lng={place.longitude}
-                    brewery={place}
-                  />
-                )}
-              </GoogleMapReact>
-            </div> 
+            { this.state.byMap &&
+              <div style={{height: '800px', width: '100%'}}>
+                <GoogleMapReact
+                  bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
+                  defaultCenter={{lat: 42.165726, lng: -74.948051}}
+                  defaultZoom={7}
+                >
+                  {this.state.breweries.map(place =>
+                    <Marker
+                      key={place.id}
+                      lat={place.latitude}
+                      lng={place.longitude}
+                      brewery={place}
+                    />
+                  )}
+                </GoogleMapReact>
+              </div> 
+            }
           </Grid.Row>
         </Grid>
       </div>

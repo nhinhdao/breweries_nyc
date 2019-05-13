@@ -4,6 +4,7 @@ import Microlink from "@microlink/react";
 import {RenderBrewery} from './RenderBrewery';
 import GoogleMapReact from 'google-map-react';
 
+//Marker to show brewery name on map
 const Marker = ({text}) => <Label size='tiny' color='blue' pointing>{text}</Label>
 
 export class Brewery extends Component {
@@ -11,7 +12,7 @@ export class Brewery extends Component {
   render() {
     const {brewery} = this.props
     const center = {lat: 42.165726, lng: -74.948051} //New York State Long and Lat
-    const text = brewery.name.split(" ").slice(0, 2).join(" ")
+    const text = brewery.name.split(" ").slice(0, 2).join(" ") //Short name to show on map marker
     return (
       <Segment>
         <Grid>
@@ -41,7 +42,6 @@ export class Brewery extends Component {
                 /> 
               </GoogleMapReact>
             </div>
-            {/* <MyMapComponent isMarkerShown markers={markers}/> */}
           </Grid.Row>
         </Grid>
       </Segment>

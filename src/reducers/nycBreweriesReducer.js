@@ -1,5 +1,5 @@
 export default function nycBreweriesReducer(state = defaultState, action) {
-  let list;
+  let list, types;
   switch (action.type) {
     case 'LOADING_QUERY':
       return {
@@ -7,8 +7,10 @@ export default function nycBreweriesReducer(state = defaultState, action) {
         loading: true
       }
     case 'GET_NYC_BREWERIES':
+      types = getType(action.payload)
       return {
         ...state,
+        types: types,
         allBreweries: action.payload,
         loading: false
       };
@@ -26,6 +28,12 @@ export default function nycBreweriesReducer(state = defaultState, action) {
         breweriesByType: list,
         loading: false
       };
+    case 'GET_SUGGESTION':
+      return {
+        ...state,
+        suggestion: action.payload,
+        loading: false
+      };
     default:
       return state;
   }
@@ -33,6 +41,8 @@ export default function nycBreweriesReducer(state = defaultState, action) {
 
 const defaultState = {
   allBreweries: [],
+  suggestion: [],
+  types: [],
   breweriesByName: [],
   breweriesByType: [],
   loading: false
@@ -67,4 +77,9 @@ const getPlaces = places => {
     phone: place.phone,
     website_url: place.website_url
   })
+}
+
+const getType = places => {
+  let mixTypes = places.map(place => setCap(place.brewery_type));
+  return [...new Set(mixTypes)]
 }
