@@ -20,7 +20,7 @@ class App extends Component {
             <Header as='h1' color='grey'>NEW YORK BREWERIES</Header>
             <Button>Learn More</Button>
           </header>
-          <Container style={{marginTop: '1em'}}>
+          <Container id='listBreweries' style={{marginTop: '1em'}}>
             <GetBreweries />
           </Container>
         </Router>
