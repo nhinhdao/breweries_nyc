@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function getNYCBreweries() {
-  const url = 'https://localhost:3001/api/v1/places'
+  const url = 'http://localhost:3001/api/v1/places'
   return dispatch => {
     dispatch({type: "LOADING_QUERY"});
     return axios.get(url)
@@ -25,7 +25,7 @@ export function searchBreweriesByType(type) {
   return dispatch => {
     dispatch({type: "LOADING_QUERY"});
     return axios.get(url)
-      .then(resp => dispatch({type: 'SEARCH_BREWERIES_BY_TYPE', payload: resp.data.reviews}))
+      .then(resp => dispatch({type: 'SEARCH_BREWERIES_BY_TYPE', payload: resp.data}))
       .catch(error => console.log(error));
   }
 }
