@@ -36,7 +36,7 @@ export function MyHeader() {
       <Header as='h1' textAlign='center' icon className='logoHeader'>
         <Icon circular inverted color='teal' name='beer' />
         <Header className='content'>EXPLORE NEW YORK FINEST BREWING COMPANIES...</Header>
-        <Button color='olive' onClick={scrollDown}>Learn more</Button>
+        <Button color='orange' onClick={scrollDown} id='btn-header'>Learn more</Button>
       </Header>
     </header>
   )

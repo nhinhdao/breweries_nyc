@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import './App.css';
+import './styles/App.scss';
 import GetBreweries from './containers/GetBreweries'
 import {Container} from 'semantic-ui-react';
-import {BrowserRouter as Router} from 'react-router-dom';
 import {MyHeader, MyFooter} from './components/HeaderFooter';
 
 class App extends Component {
@@ -13,13 +12,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Router>
-          <MyHeader />
-          <Container id='listBreweries'>
-            <GetBreweries />
-          </Container>
-          <MyFooter />
-        </Router>
+        <MyHeader />
+        <Container id='listBreweries'>
+          <GetBreweries />
+        </Container>
+        <MyFooter />
       </div>
     );
   }
