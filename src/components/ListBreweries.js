@@ -27,7 +27,7 @@ class ListBreweries extends Component {
   }
 
   render() {
-    const TOTAL_PER_PAGE = 9;
+    const TOTAL_PER_PAGE = 8;
     const {page} = this.state;
     const {breweries, getBrewery} = this.props;
     const startIndex = page * TOTAL_PER_PAGE;
@@ -47,7 +47,7 @@ class ListBreweries extends Component {
           )}
         </List>
         { breweries.length > TOTAL_PER_PAGE &&
-          <Menu floated="right" pagination>
+          <Menu floated="right" pagination size='tiny'>
             {page !== 0 &&
               <Menu.Item as="a" icon onClick={this.decrementPage}>
                 <Icon name="left chevron" />

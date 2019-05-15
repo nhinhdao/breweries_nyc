@@ -1,17 +1,6 @@
 import React, {Component} from 'react';
 import Autosuggest from 'react-autosuggest';
-import {connect} from 'react-redux';
-import {getSuggestionFromDB} from '../actions/HandleAPIs';
-
-// get the name value of the suggestion
-const getSuggestionValue = suggestion => suggestion.name;
-
-// render suggestions and give it some style.
-const renderSuggestion = suggestion => (
-  <span className="renderSuggestion">
-    {suggestion.name}
-  </span>
-);
+import axios from 'axios';
 
 class NameSuggestion extends Component {
   constructor () {
@@ -20,14 +9,47 @@ class NameSuggestion extends Component {
       value: '',
       suggestions: []
     };
-    this.getSuggestions = this.getSuggestions.bind(this)
   }
 
   // pass input value to async fetch and setstate with returned data
-  async getSuggestions(value){
+  getSuggestions = (value) => {
     const input = value.trim().toLowerCase();
-    await this.props.getSuggestionFromDB(input)
-    this.setState({suggestions: this.props.suggestion})
+    axios.get(`https://api.openbrewerydb.org/breweries?by_state=new_york&by_name=${input}`)
+      .then(res => {
+        if (res.data.length === 0) {
+          this.setState({suggestions: [{isAddNew: true}]})
+        }
+        else {
+          this.setState({suggestions: res.data})
+        }
+      })
+      .catch(error => {
+        this.setState({suggestions: []})
+      })
+  };
+
+  // get the name value of the suggestion
+  getSuggestionValue = suggestion => {
+    if (suggestion.isAddNew) {
+      return `Name not found: ${this.state.value}`;
+    }
+    return suggestion.name;
+  };
+
+  // render suggestions and give it some style.
+  renderSuggestion = suggestion => {
+    if (suggestion.isAddNew) {
+      return (
+        <span>
+          <strong>{this.state.value}</strong>
+        </span>
+      );
+    }
+    return (
+      <span className="renderSuggestion">
+        {suggestion.name}
+      </span>
+    );
   };
 
   onChange = (event, {newValue}) => {
@@ -49,8 +71,15 @@ class NameSuggestion extends Component {
   };
 
   onSuggestionSelected = (_event, {suggestion}) => {
-    console.log(suggestion);
-    this.setState({value: suggestion.name})
+    if (suggestion.isAddNew) {
+      // debugger
+      const input = document.getElementsByClassName('react-autosuggest__input');
+      input[0].style.cssText = "color: red; border: 1px solid red";
+    }
+    else {
+      document.getElementsByClassName('react-autosuggest__input')[0].removeAttribute("style")
+      this.props.setBrewery(suggestion)
+    }
   }
 
   render() {
@@ -68,25 +97,13 @@ class NameSuggestion extends Component {
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
+        getSuggestionValue={this.getSuggestionValue}
         onSuggestionSelected={this.onSuggestionSelected}
-        renderSuggestion={renderSuggestion}
+        renderSuggestion={this.renderSuggestion}
         inputProps={inputProps}
       />
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    suggestion: state.suggestion
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getSuggestionFromDB: (query) => dispatch(getSuggestionFromDB(query))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NameSuggestion);
+export default NameSuggestion;
