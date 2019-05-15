@@ -2,9 +2,8 @@ import React from 'react';
 import {Feed, Header, Icon, Popup} from 'semantic-ui-react';
 
 export function RenderBrewery({brewery}) {
-  
   return (
-    <Feed>
+    <Feed style={{marginLeft: '20px'}}>
       <Feed.Event>
         <Feed.Content>
           <Header as='h3' color='blue'>{brewery.name}</Header>

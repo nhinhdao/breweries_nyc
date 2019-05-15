@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Grid, Label, Segment} from 'semantic-ui-react';
-import Microlink from "@microlink/react";
 import {RenderBrewery} from './RenderBrewery';
 import GoogleMapReact from 'google-map-react';
 
@@ -24,15 +23,8 @@ export class Brewery extends Component {
       <Segment>
         <Grid>
           <Grid.Row>
-            <Grid.Column width={11}>
+            <Grid.Column width={16}>
               <RenderBrewery brewery={brewery} />
-            </Grid.Column>
-            <Grid.Column width={5} textAlign='center' className='breweryLogo'>
-              <Microlink
-                url={`${brewery.website_url}`}
-                media={['logo', 'image']}
-                style={{width: '128px'}}
-              />
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
