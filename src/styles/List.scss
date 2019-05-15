@@ -1,0 +1,27 @@
+
+
+div.center.aligned.row.searchPage {
+  padding-bottom: 18px;
+}
+
+
+
+div.ui.grid>.row {
+  padding-bottom: 0;
+}
+
+#list-data{
+
+  #list-header {
+    color: rgb(48, 138, 180);
+  }
+
+  #list-header:hover {
+    color: rgb(184, 52, 52);
+  }
+
+  h4#list-header:focus {
+    color: rgb(92, 78, 172);
+  }
+
+}

@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Lato");
+@import url('https://fonts.googleapis.com/css?family=Stylish');
+
+header.banner {
+  background-position: center;
+  background-image: linear-gradient(to right bottom, rgba(196, 196, 196, 0.24), rgba(216, 211, 211, 0.342)),
+    url("../images/wp3376759.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+header div.ui.menu {
+  background-color: $bg-color;
+}
+
+h1.ui.icon.center.aligned.header.logoHeader {
+  /* margin-top: 300px; */
+  position: relative;
+  top: 45%;
+}
+
+div.ui.header.content {
+  font-size: 1.8em;
+  color: rgb(255, 255, 255);
+  text-shadow: 2px 2px 5px blue;
+  font-family: $font-family;
+}
+
+.banner div.header.item {
+  color: #bbb;
+}

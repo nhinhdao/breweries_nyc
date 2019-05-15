@@ -1,0 +1,18 @@
+
+#btn-individual:hover {
+  transition: transform .3s;
+  transform: translateY(-.7rem);
+  box-shadow: 0 10px 20px rgba(15, 86, 119, 0.349);
+}
+
+#btn-individual:focus {
+  transform: translateY(-.3rem);
+  background-color: rgba(170, 110, 110, 0.822);
+  box-shadow: 0 10px 20px rgba(15, 86, 119, 0.459);
+}
+
+#btn-header:hover {
+  transition: transform .3s;
+  transform: translateY(.5rem) scale(1.2);
+  box-shadow: 0 20px 20px rgba(132, 181, 204, 0.486);
+}
