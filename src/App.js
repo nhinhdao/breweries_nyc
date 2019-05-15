@@ -1,28 +1,24 @@
 import React, {Component} from 'react';
 import './App.css';
-import logo from './logo.svg';
 import GetBreweries from './containers/GetBreweries'
-import {Container, Menu, Button, Header} from 'semantic-ui-react';
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {Container} from 'semantic-ui-react';
+import {BrowserRouter as Router} from 'react-router-dom';
+import {MyHeader, MyFooter} from './components/HeaderFooter';
 
 class App extends Component {
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <div className="App">
         <Router>
-          <header className='banner'>
-            <Menu inverted>
-              <Menu.Item as={Link} to='/' header>
-                <img src={logo} className="App-logo" alt="logo" />
-                NEW YORK BREWERIES
-              </Menu.Item>
-            </Menu>
-            <Header as='h1' color='grey'>NEW YORK BREWERIES</Header>
-            <Button>Learn More</Button>
-          </header>
-          <Container id='listBreweries' style={{marginTop: '1em'}}>
+          <MyHeader />
+          <Container id='listBreweries'>
             <GetBreweries />
           </Container>
+          <MyFooter />
         </Router>
       </div>
     );
@@ -30,3 +26,4 @@ class App extends Component {
 }
 
 export default App;
+
