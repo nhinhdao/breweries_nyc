@@ -75,11 +75,11 @@ class GetBreweries extends Component {
       <div>
         <Grid columns='equal'>
           <Grid.Row textAlign='center' className='searchPage' >
-            <Grid.Column>
-              <Button color='olive' onClick={this.getBreweries}>Breweries List</Button>
-              <Button color='green' onClick={this.getMap}>Breweries Map</Button>
-              <Button color='blue' onClick={this.toggleSearchName}>Breweries by name</Button>
-              <Button color='teal' onClick={this.toggleSearchType}>Breweries by type</Button>
+            <Grid.Column className='btns'>
+              <Button color='olive' onClick={this.getBreweries} id='btn-individual'>Breweries List</Button>
+              <Button color='green' onClick={this.getMap} id='btn-individual'>Breweries Map</Button>
+              <Button color='blue' onClick={this.toggleSearchName} id='btn-individual'>Breweries by name</Button>
+              <Button color='teal' onClick={this.toggleSearchType} id='btn-individual'>Breweries by type</Button>
               {this.state.byName &&
                 <NameSuggestion nameError={this.nameError} setBrewery={this.setBrewery}/>
               }

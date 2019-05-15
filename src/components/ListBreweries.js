@@ -34,15 +34,15 @@ class ListBreweries extends Component {
     const totalPages = Math.ceil(breweries.length / TOTAL_PER_PAGE);
     return (
       <Segment className='listPlaces'>
-        <List divided animated verticalAlign='middle' id='listData'>
+        <List divided animated verticalAlign='middle'>
           {breweries.slice(startIndex, startIndex + TOTAL_PER_PAGE).map(place =>
             <List.Item key={place.id}>
-              <List.Content onClick={() => getBrewery(place.id)}>
-                <Header as='h4' color='blue'>{place.name}</Header>
+              <List.Content onClick={() => getBrewery(place.id)} id='list-data'>
+                <Header as='h4' id='list-header'>{place.name}</Header>
                 <List.Description><Icon name='caret right' size='tiny'/> Type: {place.brewery_type}</List.Description>
                 <List.Description><Icon name='caret right' size='tiny'/> {place.address}</List.Description>
               </List.Content>
-              <List.Content><Icon name='caret right' size='tiny'/><a href={`${place.website_url}`}> {place.website_url}</a></List.Content>
+              <List.Content><Icon name='caret right' size='tiny' /><a href={`${place.website_url}`} target="_blank" rel="noopener noreferrer"> {place.website_url}</a></List.Content>
             </List.Item>
           )}
         </List>
