@@ -1,5 +1,5 @@
 export default function nycBreweriesReducer(state = defaultState, action) {
-  let list, types;
+  let list, types, brewery;
   switch (action.type) {
     case 'LOADING_QUERY':
       return {
@@ -14,18 +14,18 @@ export default function nycBreweriesReducer(state = defaultState, action) {
         allBreweries: action.payload,
         loading: false
       };
-    case 'SEARCH_BREWERIES_BY_NAME':
-      list = getPlaces(action.payload);
-      return {
-        ...state,
-        breweriesByName: list,
-        loading: false
-      };
     case 'SEARCH_BREWERIES_BY_TYPE':
-      list = getPlaces(action.payload);
+      list = action.payload.map(place => getPlace(place))
       return {
         ...state,
         breweriesByType: list,
+        loading: false
+      };
+    case 'SET_BREWERY':
+      brewery = getPlace(action.payload)
+      return {
+        ...state,
+        breweryByID: brewery,
         loading: false
       };
     case 'GET_SUGGESTION':
@@ -45,6 +45,7 @@ const defaultState = {
   types: [],
   breweriesByName: [],
   breweriesByType: [],
+  breweryByID: {},
   loading: false
 }
 
@@ -64,8 +65,8 @@ const getAddress = (place) => {
   }
 }
 
-const getPlaces = places => {
-  return places.map(place => place = {
+const getPlace = place => {
+  return {
     id: place.id,
     name: place.name,
     brewery_type: setCap(place.brewery_type),
@@ -76,7 +77,7 @@ const getPlaces = places => {
     latitude: place.latitude ? place.latitude : 40.730610,
     phone: place.phone,
     website_url: place.website_url
-  })
+  }
 }
 
 const getType = places => {
