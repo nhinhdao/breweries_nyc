@@ -6,12 +6,10 @@ import NameSuggestion from './NameSuggestion';
 import TypeSuggestion from './TypeSuggestion';
 import {Grid, Container} from 'semantic-ui-react';
 import {Marker} from '../components/RenderBrewery';
-import GridBreweries from '../components/GridBreweries';
-import ListBreweries from '../components/ListBreweries';
+import GridBreweries from './GridBreweries';
 import {slide as Menu} from 'react-burger-menu';
-import {MyFooter} from '../components/HeaderFooter';
 import {searchBreweriesByType, getNYCBreweries} from '../actions/HandleAPIs';
-import Testlist from '../components/Testlist';
+import ListBreweries from './ListBreweries';
 
 class GetBreweries extends Component {
   constructor () {
@@ -22,8 +20,8 @@ class GetBreweries extends Component {
       byName: false,
       byType: false,
       byList: false,
-      byMap: true,
-      byGrid: false,
+      byMap: false,
+      byGrid: true,
       menuOpen: false,
     };
     this.searchByType = this.searchByType.bind(this);
@@ -49,13 +47,13 @@ class GetBreweries extends Component {
 
   async searchByType(type) {
     await this.props.searchBreweriesByType(type);
-    this.setState({brewery: null, breweries: this.props.breweries, byMap: false, byList: true})
+    this.setState({brewery: null, breweries: this.props.breweries, byMap: false, byList: false})
   }
 
   async setBreweryOnNameSuggestion(brewery){
     await this.props.setBrewery(brewery)
     const {breweryByName} = this.props
-    this.setState({brewery: breweryByName, breweries: [breweryByName], byMap: false, byList: true})
+    this.setState({brewery: breweryByName, breweries: [breweryByName], byMap: false, byList: false})
   }
 
   getBreweryOnClick = (id) => {
@@ -88,7 +86,7 @@ class GetBreweries extends Component {
           </Menu>
         </div>
         <Container id='listBreweries'>
-          <Grid columns='equal'>
+          <Grid>
             <Grid.Row textAlign='center' className='searchPage' >
               <Grid.Column className='btns'>
                 {this.state.byName && <NameSuggestion setBrewery={this.setBreweryOnNameSuggestion} />}
@@ -110,23 +108,23 @@ class GetBreweries extends Component {
                 </div>
               </Grid.Row>
             }
-            <Grid.Row stretched>
-              <Grid.Column width={6}>
-              { this.state.byList && <ListBreweries breweries={this.state.breweries} getBrewery={this.getBreweryOnClick} /> }
-              </Grid.Column>
-              <Grid.Column width={10}>
-                {this.state.brewery && <Brewery brewery={this.state.brewery} />}
-              </Grid.Column>
-            </Grid.Row>
+            {this.state.brewery &&
+              <Grid.Row centered>
+                <Grid.Column width={10}>
+                  <Brewery brewery={this.state.brewery} />
+                </Grid.Column>
+              </Grid.Row>
+            }
             {this.state.byGrid && <GridBreweries breweries={this.state.breweries} />}
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Testlist breweries={this.state.breweries} />
-              </Grid.Column>
-            </Grid.Row>
+            {this.state.byList &&
+              <Grid.Row>
+                <Grid.Column width={16}>
+                  <ListBreweries breweries={this.state.breweries} />
+                </Grid.Column>
+              </Grid.Row>
+            }
           </Grid>
         </Container>
-        <MyFooter/>
       </div>
     )
   }

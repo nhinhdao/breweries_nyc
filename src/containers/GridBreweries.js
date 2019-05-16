@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import times from 'lodash.times';
 import {Card, Menu, Icon, Segment, Divider, Header} from 'semantic-ui-react';
-import {RenderSummary} from './RenderBrewery';
+import {RenderSummary} from '../components/RenderBrewery';
 
 export class GridBreweries extends Component {
   constructor (props) {

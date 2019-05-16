@@ -3,7 +3,7 @@ import './styles/App.scss';
 import {MyHeader} from './components/HeaderFooter';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Breweries from './containers/Breweries';
-import LinkToBrewery from './components/LinkToBrewery';
+import LinkToBrewery from './containers/LinkToBrewery';
 
 class App extends Component {
 

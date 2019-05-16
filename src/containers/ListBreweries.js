@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import times from 'lodash.times';
-import Brewery from './Brewery';
-import {List, Header, Segment, Icon, Menu, Tab, Divider} from 'semantic-ui-react';
+import Brewery from '../components/Brewery';
+import {List, Header, Icon, Menu, Tab} from 'semantic-ui-react';
 
-class Testlist extends Component {
+class ListBreweries extends Component {
 
   constructor (props) {
     super(props);
@@ -80,4 +80,4 @@ class Testlist extends Component {
   }
 }
 
-export default Testlist;
+export default ListBreweries;

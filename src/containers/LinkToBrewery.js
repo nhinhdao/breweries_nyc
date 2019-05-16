@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {GoogleMap} from './RenderBrewery';
+import {GoogleMap} from '../components/RenderBrewery';
 import {Link} from 'react-router-dom';
 import {searchBreweriesByID} from '../actions/HandleAPIs';
 import {Container, Header, Icon, Grid, Feed, Segment, Button} from 'semantic-ui-react';
@@ -18,7 +18,9 @@ class LinkToBrewery extends Component {
     const {breweries} = this.props;
     const id = this.state.brewery.id;
     const index = breweries.findIndex(brewery => brewery.id === id)
-    this.setState({brewery: breweries[index+1]})
+    if (index < breweries.length - 1){
+      this.setState({brewery: breweries[index+1]})
+    }
   }
 
   render() {
