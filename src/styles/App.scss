@@ -6,6 +6,10 @@
 @import './Footer.scss';
 @import './List.scss';
 
+.App{
+  position: relative;
+  min-height: 100vh;
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -27,12 +31,12 @@
 .react-autosuggest__container {
   display: inline-block;
   position: relative;
-  width: 240px;
+  width: 220px;
 }
 
 .react-autosuggest__input {
   /* display: inline-block; */
-  width: 240px;
+  width: 220px;
   height: 36px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;

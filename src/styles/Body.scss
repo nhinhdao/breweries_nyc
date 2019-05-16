@@ -55,8 +55,13 @@ html {
   }
 }
 
-div#listBreweries {
+.bg-main{
+  // background-color: rgba(236, 242, 243, 0.527);
+  padding-bottom: 90px;
+}
+
+#listBreweries {
   width: 80%;
   margin-bottom: 3em;
-  padding-top: 3em;
+  margin-top: 3em;
 }

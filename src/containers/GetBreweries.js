@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import {Grid, Button} from 'semantic-ui-react';
-import ListBreweries from '../components/ListBreweries';
-import Brewery from '../components/Brewery';
 import {connect} from 'react-redux';
+import Brewery from '../components/Brewery';
 import GoogleMapReact from 'google-map-react';
-import {getNYCBreweries, searchBreweriesByType} from '../actions/HandleAPIs';
-import {Marker} from '../components/RenderBrewery';
 import NameSuggestion from './NameSuggestion';
 import TypeSuggestion from './TypeSuggestion';
+import {Grid, Button, Divider, Icon} from 'semantic-ui-react';
+import {Marker} from '../components/RenderBrewery';
+import GridBreweries from '../components/GridBreweries';
+import ListBreweries from '../components/ListBreweries';
+import {searchBreweriesByType} from '../actions/HandleAPIs';
+import {slide as Menu} from 'react-burger-menu';
 
 class GetBreweries extends Component {
   constructor () {
@@ -19,18 +21,14 @@ class GetBreweries extends Component {
       byType: false,
       byList: false,
       byMap: true,
+      byGrid: false
     };
     this.searchByType = this.searchByType.bind(this);
     this.setBrewery = this.setBrewery.bind(this);
   }
 
-  async componentDidMount() {
-    await this.props.getNYCBreweries();
-    this.setState({breweries: this.props.nycBreweries})
-  }
-
-  handleChange = (event) => {
-    this.setState({[event.target.name]: event.target.value})
+  componentDidMount() {
+    this.setState({breweries: this.props.breweries})
   }
 
   toggleSearchName = () => {
@@ -47,14 +45,14 @@ class GetBreweries extends Component {
       this.setState({brewery: null, breweries: []})
     }
     else {
-      this.setState({brewery: null, breweries: this.props.breweriesByType, byMap: false, byList: false})
+      this.setState({brewery: null, breweries: this.props.breweriesByType, byMap: false, byList: true})
     }
   }
 
   async setBrewery(brewery){
     await this.props.setBrewery(brewery)
-    const {breweryByID} = this.props
-    this.setState({brewery: breweryByID, breweries: [breweryByID], byMap: false, byList: false})
+    const {breweryByName} = this.props
+    this.setState({brewery: breweryByName, breweries: [breweryByName], byMap: false, byList: true})
   }
 
   getBreweryOnClick = (id) => {
@@ -62,64 +60,59 @@ class GetBreweries extends Component {
     this.setState({brewery: place})
   }
 
-  getBreweries = () => {
-    this.setState({brewery: null, breweries: this.props.nycBreweries, byName: false, byType: false, byMap: false})
+  getMap = () => {
+    this.setState({brewery: null, byMap: true, byList: false, byGrid: false, byName: false, byType: false})
   }
 
-  getMap = () => {
-    this.setState({brewery: null, byMap: true, byName: false, byType: false, byList: false})
+  getList = () => {
+    this.setState({brewery: null, breweries: this.props.breweries, byList: true, byGrid: false, byMap: false, byName: false, byType: false})
+  }
+
+  getGrid = () => {
+    this.setState({brewery: null, breweries: this.props.breweries, byGrid: true, byMap: false, byList: false, byName: false, byType: false})
   }
 
   render() {
     return (
       <div>
-        <Grid columns='equal'>
-          <Grid.Row textAlign='center' className='searchPage' >
-            <Grid.Column className='btns'>
-              <Button color='olive' onClick={this.getBreweries} id='btn-individual'>Breweries List</Button>
-              <Button color='green' onClick={this.getMap} id='btn-individual'>Breweries Map</Button>
-              <Button color='blue' onClick={this.toggleSearchName} id='btn-individual'>Breweries by name</Button>
-              <Button color='teal' onClick={this.toggleSearchType} id='btn-individual'>Breweries by type</Button>
-              {this.state.byName &&
-                <NameSuggestion nameError={this.nameError} setBrewery={this.setBrewery}/>
-              }
-              {this.state.byType &&
-                <TypeSuggestion searchByType={this.searchByType}/>
-              }
-            </Grid.Column>
-          </Grid.Row>
-          {this.state.byMap &&
-            <Grid.Row>
-              <div style={{height: '78vh', width: '100%'}}>
-                <GoogleMapReact
-                  bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
-                  defaultCenter={{lat: 42.165726, lng: -74.948051}}
-                  defaultZoom={7}
-                >
-                  {this.state.breweries.map(place =>
-                    <Marker
-                      key={place.id}
-                      lat={place.latitude}
-                      lng={place.longitude}
-                      brewery={place}
-                    />
-                  )}
-                </GoogleMapReact>
-              </div>
+        <Menu isOpen>
+          <a onClick={this.getGrid} className='menu-item'>Breweries Grid</a>
+          <a onClick={this.getList} className='menu-item'>Breweries List</a>
+          <a onClick={this.getMap} className='menu-item'>Breweries Map</a>
+          <a onClick={this.toggleSearchName} className='menu-item'>Breweries by name</a>
+          <a onClick={this.toggleSearchType} className='menu-item'>Breweries by type</a>
+        </Menu>
+          <Grid columns='equal'>
+            <Grid.Row textAlign='center' className='searchPage' >
+              <Grid.Column className='btns'>
+                {this.state.byName && <NameSuggestion nameError={this.nameError} setBrewery={this.setBrewery} />}
+                {this.state.byType && <TypeSuggestion searchByType={this.searchByType} />}
+              </Grid.Column>
             </Grid.Row>
-          }
-          <Grid.Row stretched>
-            <Grid.Column width={6}>
-              {(this.state.breweries.length > 0 && !this.state.byMap) &&
-                <ListBreweries breweries={this.state.breweries} getBrewery={this.getBreweryOnClick} />
-              }
-            </Grid.Column>
-            <Grid.Column width={10}>
-              {this.state.brewery &&
-                <Brewery brewery={this.state.brewery} />
-              }
-            </Grid.Column>
-          </Grid.Row>
+            {this.state.byMap &&
+              <Grid.Row>
+                <div style={{height: '78vh', width: '100%'}}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
+                    defaultCenter={{lat: 42.165726, lng: -74.948051}}
+                    defaultZoom={7}
+                  >
+                    {this.state.breweries.map(place =>
+                      <Marker key={place.id} lat={place.latitude} lng={place.longitude} brewery={place} />
+                    )}
+                  </GoogleMapReact>
+                </div>
+              </Grid.Row>
+            }
+            <Grid.Row stretched>
+              <Grid.Column width={6}>
+              { this.state.byList && <ListBreweries breweries={this.state.breweries} getBrewery={this.getBreweryOnClick} /> }
+              </Grid.Column>
+              <Grid.Column width={10}>
+                {this.state.brewery && <Brewery brewery={this.state.brewery} />}
+              </Grid.Column>
+            </Grid.Row>
+          {this.state.byGrid && <GridBreweries breweries={this.state.breweries} />}
         </Grid>
       </div>
     )
@@ -129,15 +122,14 @@ class GetBreweries extends Component {
 
 const mapStateToProps = state => {
   return {
-    nycBreweries: state.allBreweries,
+    breweries: state.breweries,
     breweriesByType: state.breweriesByType,
-    breweryByID: state.breweryByID
+    breweryByName: state.breweryByName
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getNYCBreweries: () => dispatch(getNYCBreweries()),
     searchBreweriesByType: type => dispatch(searchBreweriesByType(type)),
     setBrewery: brewery => dispatch({type: 'SET_BREWERY', payload: brewery})
   }

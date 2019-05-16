@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function getNYCBreweries() {
-  const url = 'http://localhost:3001/api/v1/places'
+  const url = 'https://breweries-api.herokuapp.com/api/v1/places'
   return dispatch => {
     dispatch({type: "LOADING_QUERY"});
     return axios.get(url)

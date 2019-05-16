@@ -11,21 +11,21 @@ export default function nycBreweriesReducer(state = defaultState, action) {
       return {
         ...state,
         types: types,
-        allBreweries: action.payload,
+        breweries: action.payload,
         loading: false
       };
     case 'SEARCH_BREWERIES_BY_TYPE':
       list = action.payload.map(place => getPlace(place))
       return {
         ...state,
-        breweriesByType: list,
+        breweries: list,
         loading: false
       };
     case 'SET_BREWERY':
       brewery = getPlace(action.payload)
       return {
         ...state,
-        breweryByID: brewery,
+        breweries: [brewery],
         loading: false
       };
     case 'GET_SUGGESTION':
@@ -40,12 +40,11 @@ export default function nycBreweriesReducer(state = defaultState, action) {
 }
 
 const defaultState = {
-  allBreweries: [],
+  breweries: [],
   suggestion: [],
   types: [],
-  breweriesByName: [],
+  breweryByName: {},
   breweriesByType: [],
-  breweryByID: {},
   loading: false
 }
 

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato");
 @import url('https://fonts.googleapis.com/css?family=Stylish');
 
-header.banner {
+header.bg-header {
   background-position: center;
   background-image: linear-gradient(to right bottom, rgba(196, 196, 196, 0.24), rgba(216, 211, 211, 0.342)),
     url("../images/wp3376759.jpg");
@@ -10,14 +10,13 @@ header.banner {
   height: 100vh;
 }
 
-header div.ui.menu {
-  background-color: $bg-color;
+div.ui.top.fixed.menu {
+  background-color: rgba(238, 232, 232, 0.897);
 }
 
 h1.ui.icon.center.aligned.header.logoHeader {
-  /* margin-top: 300px; */
   position: relative;
-  top: 45%;
+  top: 40%;
 }
 
 div.ui.header.content {
@@ -27,6 +26,11 @@ div.ui.header.content {
   font-family: $font-family;
 }
 
-.banner div.header.item {
-  color: #bbb;
+a.item:hover{
+  background-color: red;
+  box-shadow: 0 10px 20px rgba(15, 86, 119, 0.349);
+}
+
+a.item:visited{
+box-shadow: 0 10px 20px rgba(172, 72, 175, 0.349);
 }
