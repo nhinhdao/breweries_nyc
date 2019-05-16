@@ -1,6 +1,7 @@
-div.ui.fluid.container.btns{
-  align-items: center;
+div.ui.fluid.container.btns {
+  background: #797a818c;
 }
+
 
 button.ui.button.btn-individual:hover {
   transition: transform .3s;
@@ -20,8 +21,9 @@ button.ui.button.btn-individual:focus {
   box-shadow: 0 20px 20px rgba(132, 181, 204, 0.486);
 }
 
-// #listBreweries
+
 /* Position and sizing of burger button */
+
 .bm-burger-button {
   position: fixed;
   width: 36px;
@@ -30,60 +32,46 @@ button.ui.button.btn-individual:focus {
   top: 36px;
 }
 
-/* Color/shape of burger icon bars */
 .bm-burger-bars {
   background: #373a47;
 }
 
-/* Color/shape of burger icon bars on hover*/
-.bm-burger-bars-hover {
-  background: #a90000;
-}
-
-/* Position and sizing of clickable cross button */
-.bm-cross-button {
-  height: 24px;
-  width: 24px;
-}
-
-/* Color/shape of close button cross */
-.bm-cross {
-  background: #bdc3c7;
-}
-
-/*
-Sidebar wrapper styles
-Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
-*/
-.bm-menu-wrap {
-  position: fixed;
-  height: 100%;
-}
-
-/* General sidebar styles */
-.bm-menu {
-  background: #373a47;
-  padding: 2.5em 1.5em 0;
-  font-size: 1.15em;
-}
-
-/* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
   fill: #373a47;
 }
 
-/* Wrapper for item list */
-.bm-item-list {
-  color: #b8b7ad;
+.bm-cross {
+  background: #bdc3c7;
+}
+
+.bm-menu {
+  padding: 4em 1.5em 0;
+  background: #373a47;
+  font-size: 1.3em;
+
+  span {
+    color: #b8b7ad;
+    text-transform: uppercase;
+
+    &:hover,
+    &:focus {
+      background: rgba(202, 200, 200, 0.295);
+      color: #ce5829;
+    }
+  }
+}
+
+.bm-item-list span {
   padding: 0.8em;
+
+  strong {
+    margin-left: 10px;
+    font-weight: 700;
+    font-size: 1em;
+  }
 }
 
-/* Individual item */
-.bm-item {
-  display: inline-block;
+.bm-item:focus {
+  outline: none;
 }
 
-/* Styling of overlay */
-.bm-overlay {
-  background: rgba(0, 0, 0, 0.3);
-}

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import times from 'lodash.times';
-import {connect} from 'react-redux';
-import {Card, Menu, Icon, Segment, Divider} from 'semantic-ui-react';
+import {Card, Menu, Icon, Segment, Divider, Header} from 'semantic-ui-react';
 import {RenderSummary} from './RenderBrewery';
 
 export class GridBreweries extends Component {
@@ -35,6 +34,7 @@ export class GridBreweries extends Component {
     const totalPages = Math.ceil(breweries.length / TOTAL_PER_PAGE);
     return (
       <Segment basic>
+        <Header className='gr-header' textAlign='center'>NEW YORK BREWERIES GRID</Header>
         <Card.Group itemsPerRow={3}>
           {breweries.slice(startIndex, startIndex + TOTAL_PER_PAGE).map(brewery =>
             <RenderSummary brewery={brewery} key={brewery.id}/>
@@ -66,11 +66,4 @@ export class GridBreweries extends Component {
   }
 }
 
-
-const mapStateToProps = state => {
-  return {
-    breweries: state.breweries
-  }
-}
-
-export default connect(mapStateToProps)(GridBreweries);
+export default GridBreweries;

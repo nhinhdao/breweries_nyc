@@ -10,6 +10,7 @@ class MapBreweries extends Component {
     const {breweries} = this.props;
     return (
       <Grid.Row>
+        <Header className='mp-header' textAlign='center'>NEW YORK BREWERIES MAP</Header>
         <div style={{height: '78vh', width: '100%'}}>
           <GoogleMapReact
             bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}

@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../logo.svg';
 import {Link} from 'react-router-dom';
-import {Segment, Container, Header, Button, Icon} from 'semantic-ui-react';
+import {Segment, Container, Header, Button, Icon, Menu} from 'semantic-ui-react';
 
 export function MyFooter() {
   return (
@@ -27,3 +27,19 @@ export function MyHeader() {
   )
 }
 
+
+export function StickyMenu() {
+
+  return (
+    <Menu>
+      <Container fluid className='btns'>
+        <Link to='/'>
+          <Menu.Item header>
+            <img src={logo} className="App-logo" alt="logo" />
+            NEW YORK BREWERIES
+          </Menu.Item>
+        </Link>
+      </Container>
+    </Menu>
+  )
+}

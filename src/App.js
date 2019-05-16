@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './styles/App.scss';
 import {MyHeader} from './components/HeaderFooter';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import Breweries from './components/Breweries';
-import GetBreweries from './containers/GetBreweries';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Breweries from './containers/Breweries';
+import LinkToBrewery from './components/LinkToBrewery';
 
 class App extends Component {
 
@@ -11,8 +11,11 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Route exact path="/" component={MyHeader} />
-          <Route path="/breweries" component={GetBreweries} />
+          <Switch>
+            <Route exact path="/breweries/grid/:breweryID" component={LinkToBrewery} />
+            <Route exact path="/breweries" component={Breweries} />
+            <Route exact path="/" component={MyHeader} />
+          </Switch>
         </Router>
       </div>
     );

@@ -4,12 +4,14 @@ import Brewery from '../components/Brewery';
 import GoogleMapReact from 'google-map-react';
 import NameSuggestion from './NameSuggestion';
 import TypeSuggestion from './TypeSuggestion';
-import {Grid, Button, Divider, Icon} from 'semantic-ui-react';
+import {Grid, Container} from 'semantic-ui-react';
 import {Marker} from '../components/RenderBrewery';
 import GridBreweries from '../components/GridBreweries';
 import ListBreweries from '../components/ListBreweries';
-import {searchBreweriesByType} from '../actions/HandleAPIs';
 import {slide as Menu} from 'react-burger-menu';
+import {MyFooter} from '../components/HeaderFooter';
+import {searchBreweriesByType, getNYCBreweries} from '../actions/HandleAPIs';
+import Testlist from '../components/Testlist';
 
 class GetBreweries extends Component {
   constructor () {
@@ -21,35 +23,36 @@ class GetBreweries extends Component {
       byType: false,
       byList: false,
       byMap: true,
-      byGrid: false
+      byGrid: false,
+      menuOpen: false,
     };
     this.searchByType = this.searchByType.bind(this);
-    this.setBrewery = this.setBrewery.bind(this);
+    this.setBreweryOnNameSuggestion = this.setBreweryOnNameSuggestion.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.props.getNYCBreweries();
     this.setState({breweries: this.props.breweries})
   }
 
+  handleStateChange = (state) => {
+    this.setState({menuOpen: state.isOpen})
+  }
+
   toggleSearchName = () => {
-    this.setState({byName: true, byType:false})
+    this.setState({byName: true, byType: false, menuOpen: false})
   }
 
   toggleSearchType = () => {
-    this.setState({byName: false, byType: true})
+    this.setState({byName: false, byType: true, menuOpen: false})
   }
 
   async searchByType(type) {
     await this.props.searchBreweriesByType(type);
-    if (this.props.breweriesByType.length === 0) {
-      this.setState({brewery: null, breweries: []})
-    }
-    else {
-      this.setState({brewery: null, breweries: this.props.breweriesByType, byMap: false, byList: true})
-    }
+    this.setState({brewery: null, breweries: this.props.breweries, byMap: false, byList: true})
   }
 
-  async setBrewery(brewery){
+  async setBreweryOnNameSuggestion(brewery){
     await this.props.setBrewery(brewery)
     const {breweryByName} = this.props
     this.setState({brewery: breweryByName, breweries: [breweryByName], byMap: false, byList: true})
@@ -61,31 +64,34 @@ class GetBreweries extends Component {
   }
 
   getMap = () => {
-    this.setState({brewery: null, byMap: true, byList: false, byGrid: false, byName: false, byType: false})
+    this.setState({brewery: null, byMap: true, byList: false, byGrid: false, byName: false, byType: false, menuOpen: false})
   }
 
   getList = () => {
-    this.setState({brewery: null, breweries: this.props.breweries, byList: true, byGrid: false, byMap: false, byName: false, byType: false})
+    this.setState({brewery: null, byList: true, byGrid: false, byMap: false, byName: false, byType: false, menuOpen: false})
   }
 
   getGrid = () => {
-    this.setState({brewery: null, breweries: this.props.breweries, byGrid: true, byMap: false, byList: false, byName: false, byType: false})
+    this.setState({brewery: null, byGrid: true, byMap: false, byList: false, byName: false, byType: false, menuOpen: false})
   }
 
   render() {
     return (
-      <div>
-        <Menu isOpen>
-          <a onClick={this.getGrid} className='menu-item'>Breweries Grid</a>
-          <a onClick={this.getList} className='menu-item'>Breweries List</a>
-          <a onClick={this.getMap} className='menu-item'>Breweries Map</a>
-          <a onClick={this.toggleSearchName} className='menu-item'>Breweries by name</a>
-          <a onClick={this.toggleSearchType} className='menu-item'>Breweries by type</a>
-        </Menu>
+      <div id='outer-container'>
+        <div>
+          <Menu disableAutoFocus isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
+            <span onClick={this.getGrid} className='menu-item fa fa-fw fa-star-o'><strong>Breweries Grid</strong></span>
+            <span onClick={this.getList} className='menu-item'><strong>Breweries List</strong></span>
+            <span onClick={this.getMap} className='menu-item'><strong>Breweries Map</strong></span>
+            <span onClick={this.toggleSearchName} className='menu-item'><strong>Breweries by name</strong></span>
+            <span onClick={this.toggleSearchType} className='menu-item'><strong>Breweries by type</strong></span>
+          </Menu>
+        </div>
+        <Container id='listBreweries'>
           <Grid columns='equal'>
             <Grid.Row textAlign='center' className='searchPage' >
               <Grid.Column className='btns'>
-                {this.state.byName && <NameSuggestion nameError={this.nameError} setBrewery={this.setBrewery} />}
+                {this.state.byName && <NameSuggestion setBrewery={this.setBreweryOnNameSuggestion} />}
                 {this.state.byType && <TypeSuggestion searchByType={this.searchByType} />}
               </Grid.Column>
             </Grid.Row>
@@ -112,8 +118,15 @@ class GetBreweries extends Component {
                 {this.state.brewery && <Brewery brewery={this.state.brewery} />}
               </Grid.Column>
             </Grid.Row>
-          {this.state.byGrid && <GridBreweries breweries={this.state.breweries} />}
-        </Grid>
+            {this.state.byGrid && <GridBreweries breweries={this.state.breweries} />}
+            <Grid.Row>
+              <Grid.Column width={16}>
+                <Testlist breweries={this.state.breweries} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+        <MyFooter/>
       </div>
     )
   }
@@ -123,13 +136,13 @@ class GetBreweries extends Component {
 const mapStateToProps = state => {
   return {
     breweries: state.breweries,
-    breweriesByType: state.breweriesByType,
     breweryByName: state.breweryByName
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    getNYCBreweries: () => dispatch(getNYCBreweries()),
     searchBreweriesByType: type => dispatch(searchBreweriesByType(type)),
     setBrewery: brewery => dispatch({type: 'SET_BREWERY', payload: brewery})
   }

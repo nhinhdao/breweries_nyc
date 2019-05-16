@@ -71,13 +71,14 @@ class NameSuggestion extends Component {
   };
 
   onSuggestionSelected = (_event, {suggestion}) => {
+    const input = document.getElementsByClassName('react-autosuggest__input')[0];
     if (suggestion.isAddNew) {
       // debugger
-      const input = document.getElementsByClassName('react-autosuggest__input');
-      input[0].style.cssText = "color: red; border: 1px solid red";
+      input.style.cssText = "color: red; border: 1px solid red";
     }
     else {
-      document.getElementsByClassName('react-autosuggest__input')[0].removeAttribute("style")
+      input.removeAttribute("style");
+      // input.value = "";
       this.props.setBrewery(suggestion)
     }
   }
@@ -100,6 +101,7 @@ class NameSuggestion extends Component {
         getSuggestionValue={this.getSuggestionValue}
         onSuggestionSelected={this.onSuggestionSelected}
         renderSuggestion={this.renderSuggestion}
+        focusInputOnSuggestionClick={false}
         inputProps={inputProps}
       />
     );

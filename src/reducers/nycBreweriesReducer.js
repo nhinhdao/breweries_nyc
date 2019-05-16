@@ -21,11 +21,18 @@ export default function nycBreweriesReducer(state = defaultState, action) {
         breweries: list,
         loading: false
       };
+    case 'SEARCH_BREWERIES_BY_NAME':
+      brewery = getPlace(action.payload)
+      return {
+        ...state,
+        breweryByName: brewery,
+        loading: false
+      };
     case 'SET_BREWERY':
       brewery = getPlace(action.payload)
       return {
         ...state,
-        breweries: [brewery],
+        breweryByName: brewery,
         loading: false
       };
     case 'GET_SUGGESTION':
@@ -44,7 +51,6 @@ const defaultState = {
   suggestion: [],
   types: [],
   breweryByName: {},
-  breweriesByType: [],
   loading: false
 }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import times from 'lodash.times';
 import Brewery from './Brewery';
-import {List, Header, Segment, Icon, Menu, Tab} from 'semantic-ui-react';
+import {List, Header, Segment, Icon, Menu, Tab, Divider} from 'semantic-ui-react';
 
 class Testlist extends Component {
 
@@ -37,15 +37,14 @@ class Testlist extends Component {
       {
         menuItem: (
           <Menu.Item key={place.id}>
-          <List divided animated verticalAlign='middle'>
-            <List.Item>
-              <List.Content id='list-data'>
-                <Header as='h4' id='list-header'>{place.name}</Header>
-                <List.Description><Icon name='caret right' size='tiny' /> Type: {place.brewery_type}</List.Description>
-                <List.Description><Icon name='caret right' size='tiny' /> {place.address}</List.Description>
-              </List.Content>
-              <List.Content><Icon name='caret right' size='tiny' /><a href={`${place.website_url}`} target="_blank" rel="noopener noreferrer"> {place.website_url}</a></List.Content>
-            </List.Item>
+            <List divided animated verticalAlign='middle'>
+              <List.Item>
+                <List.Content id='list-data'>
+                  <Header as='h4' id='list-header'>{place.name}</Header>
+                  <List.Description><Icon name='caret right' size='tiny' /> Type: {place.brewery_type}</List.Description>
+                  <List.Description><Icon name='caret right' size='tiny' /> {place.address}</List.Description>
+                </List.Content>
+              </List.Item>
             </List>
           </Menu.Item>
         ),
@@ -57,8 +56,8 @@ class Testlist extends Component {
       })
     )
     return (
-      <Segment color='teal'>
-        <Tab menu={{fluid: true, vertical: true, tabular: true}} panes={panes} renderActiveOnly={false} />
+      <div>
+        <Tab menu={{fluid: true, vertical: true}} panes={panes} renderActiveOnly={false} />
         <Menu pagination size='tiny'>
           {page !== 0 &&
             <Menu.Item as="a" icon onClick={this.decrementPage}>
@@ -76,7 +75,7 @@ class Testlist extends Component {
             </Menu.Item>
           }
         </Menu>
-      </Segment>
+      </div>
     )
   }
 }

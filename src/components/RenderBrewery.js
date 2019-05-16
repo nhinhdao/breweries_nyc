@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Feed, Header, Icon, Popup, Card, Divider} from 'semantic-ui-react';
+import GoogleMapReact from 'google-map-react';
+import {Feed, Header, Icon, Popup, Card, Divider, Label} from 'semantic-ui-react';
 
 export function RenderBrewery({brewery}) {
   return (
@@ -56,5 +57,29 @@ export function Marker({brewery}) {
       wide='very'
       position='bottom center'
     />
+  )
+}
+
+export function GoogleMap({brewery}) {
+
+  const text = brewery.name.split(" ").slice(0, 2).join(" ") //Short name to show on map marker;
+
+  //Marker to show brewery name on map
+  const Marker = ({text}) => <Label size='tiny' color='blue' pointing>{text}</Label>;
+
+  return (
+    <div style={{height: '420px', width: '100%'}}>
+      <GoogleMapReact
+        bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
+        defaultCenter={{lat: 42.165726, lng: -74.948051}} //New York State Long and Lat
+        defaultZoom={6}
+      >
+        <Marker
+          lat={brewery.latitude}
+          lng={brewery.longitude}
+          text={text}
+        />
+      </GoogleMapReact>
+    </div>
   )
 }
