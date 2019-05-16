@@ -1,25 +1,30 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import GoogleMapReact from 'google-map-react';
-import {Feed, Header, Icon, Popup, Card, Divider, Label} from 'semantic-ui-react';
+import {Feed, Header, Icon, Popup, Card, Divider, Label, Grid} from 'semantic-ui-react';
 
 export function RenderBrewery({brewery}) {
   return (
-    <Feed style={{marginLeft: '20px'}}>
-      <Feed.Event>
-        <Feed.Content>
-          <Header as='h3' color='blue'>{brewery.name}</Header>
-          <div style={{marginLeft: '20px'}}>
-            <Feed.Extra text><Icon name='tag'/>{" "}{brewery.brewery_type}</Feed.Extra>
-            <Feed.Extra text><Icon name='map marker alternate'/>{" "}{brewery.address}</Feed.Extra>
-            <Feed.Extra text><Icon name='globe'/>{" "}{brewery.country}</Feed.Extra>
-            <Feed.Extra text><Icon name='barcode'/>{" "}{brewery.postal_code}</Feed.Extra>
-            <Feed.Extra text><Icon name='phone'/>{" "}{brewery.phone}</Feed.Extra>
-            <Feed.Extra text><Icon name='linkify'/>{" "}<a href={`${brewery.website_url}`} rel="noopener noreferrer" target='_blank'>{brewery.website_url}</a></Feed.Extra>
-          </div>
-        </Feed.Content>
-      </Feed.Event>
-    </Feed>
+    <Grid centered>
+      <Header className='br-header' textAlign='center'>{brewery.name}</Header>
+      <Grid.Row>
+        <Grid.Column width={9}>
+          <Feed className='br-des'>
+            <Feed.Extra text><Icon name='tag' />{" "}{brewery.brewery_type}</Feed.Extra>
+            <Feed.Extra text><Icon name='map marker alternate' />{" "}{brewery.address}</Feed.Extra>
+            <Feed.Extra text><Icon name='globe' />{" "}{brewery.country}</Feed.Extra>
+            <Feed.Extra text><Icon name='barcode' />{" "}{brewery.postal_code}</Feed.Extra>
+            <Feed.Extra text><Icon name='phone' />{" "}{brewery.phone}</Feed.Extra>
+            <Feed.Extra text><Icon name='linkify' />{" "}<a href={`${brewery.website_url}`} rel="noopener noreferrer" target='_blank'>{brewery.website_url}</a></Feed.Extra>
+          </Feed>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column width={12}>
+          <GoogleMap brewery={brewery} />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   )
 }
 
@@ -27,7 +32,7 @@ export function RenderSummary({brewery}) {
   return (
     <Card raised>
       <Card.Content>
-        <Link to={`/breweries/grid/${brewery.id}`}><Header as='h4' color='blue' textAlign='center'>{brewery.name}</Header></Link>
+        <Link to={`/breweries/${brewery.id}`}><Header as='h4' color='blue' textAlign='center'>{brewery.name}</Header></Link>
         <Divider />
         <div style={{marginLeft: '20px'}}>
           <Card.Description>

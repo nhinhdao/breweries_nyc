@@ -34,15 +34,18 @@ export class GridBreweries extends Component {
     const totalPages = Math.ceil(breweries.length / TOTAL_PER_PAGE);
     return (
       <Segment basic>
-        <Header className='gr-header' textAlign='center'>NEW YORK BREWERIES GRID</Header>
+        <Header as='h2' icon textAlign='center'>
+          <Icon name='grid layout' color='blue' />
+          <Header.Content>NEW YORK BREWERIES GRID</Header.Content>
+        </Header>
+        <Divider />
         <Card.Group itemsPerRow={3}>
           {breweries.slice(startIndex, startIndex + TOTAL_PER_PAGE).map(brewery =>
             <RenderSummary brewery={brewery} key={brewery.id}/>
           )}
         </Card.Group>
         <Divider hidden />
-        {
-          breweries.length > TOTAL_PER_PAGE &&
+        { breweries.length > TOTAL_PER_PAGE &&
           <Menu floated="right" pagination size='tiny'>
             {page !== 0 &&
               <Menu.Item as="a" icon onClick={this.decrementPage}>

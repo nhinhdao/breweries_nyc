@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import times from 'lodash.times';
 import Brewery from '../components/Brewery';
-import {List, Header, Icon, Menu, Tab} from 'semantic-ui-react';
+import {List, Header, Icon, Menu, Tab, Divider} from 'semantic-ui-react';
 
 class ListBreweries extends Component {
 
@@ -57,24 +57,31 @@ class ListBreweries extends Component {
     )
     return (
       <div>
+        <Header as='h2' icon textAlign='center'>
+          <Icon name='list alternate outline' color='blue' />
+          <Header.Content>NEW YORK BREWERIES LIST</Header.Content>
+        </Header>
+        <Divider />
         <Tab menu={{fluid: true, vertical: true}} panes={panes} renderActiveOnly={false} />
-        <Menu pagination size='tiny'>
-          {page !== 0 &&
-            <Menu.Item as="a" icon onClick={this.decrementPage}>
-              <Icon name="left chevron" />
-            </Menu.Item>
-          }
-          {times(totalPages, n =>
-            (<Menu.Item as="a" key={n} active={n === page} onClick={this.setPage(n)}>
-              {n + 1}
-            </Menu.Item>),
-          )}
-          {page !== (totalPages - 1) &&
-            <Menu.Item as="a" icon onClick={this.incrementPage}>
-              <Icon name="right chevron" />
-            </Menu.Item>
-          }
-        </Menu>
+        { breweries.length > TOTAL_PER_PAGE &&
+          <Menu pagination size='tiny'>
+            {page !== 0 &&
+              <Menu.Item as="a" icon onClick={this.decrementPage}>
+                <Icon name="left chevron" />
+              </Menu.Item>
+            }
+            {times(totalPages, n =>
+              (<Menu.Item as="a" key={n} active={n === page} onClick={this.setPage(n)}>
+                {n + 1}
+              </Menu.Item>),
+            )}
+            {page !== (totalPages - 1) &&
+              <Menu.Item as="a" icon onClick={this.incrementPage}>
+                <Icon name="right chevron" />
+              </Menu.Item>
+            }
+          </Menu>
+        }
       </div>
     )
   }

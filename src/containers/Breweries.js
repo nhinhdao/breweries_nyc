@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Brewery from '../components/Brewery';
-import GoogleMapReact from 'google-map-react';
 import NameSuggestion from './NameSuggestion';
 import TypeSuggestion from './TypeSuggestion';
 import {Grid, Container} from 'semantic-ui-react';
-import {Marker} from '../components/RenderBrewery';
 import GridBreweries from './GridBreweries';
 import {slide as Menu} from 'react-burger-menu';
 import {searchBreweriesByType, getNYCBreweries} from '../actions/HandleAPIs';
 import ListBreweries from './ListBreweries';
+import MapBreweries from '../components/MapBreweries';
+import {RenderBrewery} from '../components/RenderBrewery';
 
 class GetBreweries extends Component {
   constructor () {
@@ -47,13 +46,13 @@ class GetBreweries extends Component {
 
   async searchByType(type) {
     await this.props.searchBreweriesByType(type);
-    this.setState({brewery: null, breweries: this.props.breweries, byMap: false, byList: false})
+    this.setState({brewery: null, breweries: this.props.breweries, byList: true, byMap: false, byGrid: false})
   }
 
   async setBreweryOnNameSuggestion(brewery){
     await this.props.setBrewery(brewery)
     const {breweryByName} = this.props
-    this.setState({brewery: breweryByName, breweries: [breweryByName], byMap: false, byList: false})
+    this.setState({brewery: breweryByName, breweries: [breweryByName], byMap: false, byList: false, byGrid: false})
   }
 
   getBreweryOnClick = (id) => {
@@ -93,30 +92,20 @@ class GetBreweries extends Component {
                 {this.state.byType && <TypeSuggestion searchByType={this.searchByType} />}
               </Grid.Column>
             </Grid.Row>
-            {this.state.byMap &&
-              <Grid.Row>
-                <div style={{height: '78vh', width: '100%'}}>
-                  <GoogleMapReact
-                    bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
-                    defaultCenter={{lat: 42.165726, lng: -74.948051}}
-                    defaultZoom={7}
-                  >
-                    {this.state.breweries.map(place =>
-                      <Marker key={place.id} lat={place.latitude} lng={place.longitude} brewery={place} />
-                    )}
-                  </GoogleMapReact>
-                </div>
-              </Grid.Row>
+            { this.state.byMap &&
+              <MapBreweries breweries={this.state.breweries} />
             }
-            {this.state.brewery &&
-              <Grid.Row centered>
-                <Grid.Column width={10}>
-                  <Brewery brewery={this.state.brewery} />
+            { this.state.brewery &&
+              <Grid.Row centered className='br-row'>
+                <Grid.Column width={16}>
+                  <RenderBrewery brewery={this.state.brewery} />
                 </Grid.Column>
               </Grid.Row>
             }
-            {this.state.byGrid && <GridBreweries breweries={this.state.breweries} />}
-            {this.state.byList &&
+            { this.state.byGrid &&
+              <GridBreweries breweries={this.state.breweries} />
+            }
+            { this.state.byList &&
               <Grid.Row>
                 <Grid.Column width={16}>
                   <ListBreweries breweries={this.state.breweries} />

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Grid} from 'semantic-ui-react';
+import {Grid, Header, Icon, Divider} from 'semantic-ui-react';
 import GoogleMapReact from 'google-map-react';
 import {Marker} from '../components/RenderBrewery';
 
@@ -10,8 +10,12 @@ class MapBreweries extends Component {
     const {breweries} = this.props;
     return (
       <Grid.Row>
-        <Header className='mp-header' textAlign='center'>NEW YORK BREWERIES MAP</Header>
-        <div style={{height: '78vh', width: '100%'}}>
+        <Header as='h2' icon textAlign='center'>
+          <Icon name='map outline' color='blue' />
+          <Header.Content>NEW YORK BREWERIES MAP</Header.Content>
+        </Header>
+        <Divider />
+        <div style={{height: '80vh', width: '100%'}}>
           <GoogleMapReact
             bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
             defaultCenter={{lat: 42.165726, lng: -74.948051}}
