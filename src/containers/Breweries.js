@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import NameSuggestion from './NameSuggestion';
 import TypeSuggestion from './TypeSuggestion';
 import {Grid, Container} from 'semantic-ui-react';
@@ -77,11 +78,14 @@ class GetBreweries extends Component {
       <div id='outer-container'>
         <div>
           <Menu disableAutoFocus isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
-            <span onClick={this.getGrid} className='menu-item fa fa-fw fa-star-o'><strong>Breweries Grid</strong></span>
-            <span onClick={this.getList} className='menu-item'><strong>Breweries List</strong></span>
-            <span onClick={this.getMap} className='menu-item'><strong>Breweries Map</strong></span>
-            <span onClick={this.toggleSearchName} className='menu-item'><strong>Breweries by name</strong></span>
-            <span onClick={this.toggleSearchType} className='menu-item'><strong>Breweries by type</strong></span>
+            <h2 className='barHeader'><Link to='/'>HOME</Link></h2>
+            <h2 className='barHeader'>BREWERIES</h2>
+            <span onClick={this.getGrid} className='menu-item grid'><strong>Grid</strong></span>
+            <span onClick={this.getList} className='menu-item list'><strong>List</strong></span>
+            <span onClick={this.getMap} className='menu-item map'><strong>Map</strong></span>
+            <h2 className='barHeader'>SEARCH</h2>
+            <span onClick={this.toggleSearchName} className='menu-item name'><strong>Name</strong></span>
+            <span onClick={this.toggleSearchType} className='menu-item type'><strong>Type</strong></span>
           </Menu>
         </div>
         <Container id='listBreweries'>
@@ -95,7 +99,7 @@ class GetBreweries extends Component {
             { this.state.byMap &&
               <MapBreweries breweries={this.state.breweries} />
             }
-            <Grid.Row centered className='br-row'>
+            <Grid.Row centered stretched id='br-search'>
               <Grid.Column width={16}>
                 {this.state.brewery &&
                   <RenderBrewery brewery={this.state.brewery} />
