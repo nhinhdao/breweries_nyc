@@ -80,8 +80,8 @@ const getPlace = place => {
     country: place.country,
     longitude: place.longitude ? place.longitude : -73.935242,
     latitude: place.latitude ? place.latitude : 40.730610,
-    phone: place.phone,
-    website_url: place.website_url
+    phone: place.phone ? place.phone : 'N/A',
+    website_url: place.website_url ? place.website_url : 'N/A'
   }
 }
 
