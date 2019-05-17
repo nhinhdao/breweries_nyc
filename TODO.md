@@ -25,6 +25,7 @@
 
 - [x] Build a component to displays a list of breweries
 - [x] Build a component to display the details of a brewery
+- [x] Components show a correspondent map with markers.
 - [x] Apply SASS and Semantic UI React for styling
 - [x] Build Rails API back end to seed and return static data
 - [x] Host back end site to Heroku ([Breweries API back end](https://breweries-api.herokuapp.com/api/v1/places))
