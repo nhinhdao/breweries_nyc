@@ -52,7 +52,7 @@ class GetBreweries extends Component {
   async setBreweryOnNameSuggestion(brewery){
     await this.props.setBrewery(brewery)
     const {breweryByName} = this.props
-    this.setState({brewery: breweryByName, breweries: [breweryByName], byMap: false, byList: false, byGrid: false})
+    this.setState({brewery: breweryByName, byMap: false, byList: false, byGrid: false})
   }
 
   getBreweryOnClick = (id) => {
@@ -95,23 +95,19 @@ class GetBreweries extends Component {
             { this.state.byMap &&
               <MapBreweries breweries={this.state.breweries} />
             }
-            { this.state.brewery &&
-              <Grid.Row centered className='br-row'>
-                <Grid.Column width={16}>
+            <Grid.Row centered className='br-row'>
+              <Grid.Column width={16}>
+                {this.state.brewery &&
                   <RenderBrewery brewery={this.state.brewery} />
-                </Grid.Column>
-              </Grid.Row>
-            }
-            { this.state.byGrid &&
-              <GridBreweries breweries={this.state.breweries} />
-            }
-            { this.state.byList &&
-              <Grid.Row>
-                <Grid.Column width={16}>
+                }
+                {this.state.byGrid &&
+                  <GridBreweries breweries={this.state.breweries} />
+                }
+                {this.state.byList &&
                   <ListBreweries breweries={this.state.breweries} />
+                }
                 </Grid.Column>
               </Grid.Row>
-            }
           </Grid>
         </Container>
       </div>

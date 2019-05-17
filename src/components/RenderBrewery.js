@@ -20,7 +20,7 @@ export function RenderBrewery({brewery}) {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column width={12}>
+        <Grid.Column>
           <GoogleMap brewery={brewery} />
         </Grid.Column>
       </Grid.Row>
@@ -30,7 +30,7 @@ export function RenderBrewery({brewery}) {
 
 export function RenderSummary({brewery}) {
   return (
-    <Card raised>
+    <Card>
       <Card.Content>
         <Link to={`/breweries/${brewery.id}`}><Header as='h4' color='blue' textAlign='center'>{brewery.name}</Header></Link>
         <Divider />

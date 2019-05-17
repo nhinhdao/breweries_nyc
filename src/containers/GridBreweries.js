@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import times from 'lodash.times';
-import {Card, Menu, Icon, Segment, Divider, Header} from 'semantic-ui-react';
+import {Card, Menu, Icon, Divider, Header} from 'semantic-ui-react';
 import {RenderSummary} from '../components/RenderBrewery';
 
 export class GridBreweries extends Component {
@@ -33,7 +33,7 @@ export class GridBreweries extends Component {
     const startIndex = page * TOTAL_PER_PAGE;
     const totalPages = Math.ceil(breweries.length / TOTAL_PER_PAGE);
     return (
-      <Segment basic>
+      <div>
         <Header as='h2' icon textAlign='center'>
           <Icon name='grid layout' color='blue' />
           <Header.Content>NEW YORK BREWERIES GRID</Header.Content>
@@ -64,7 +64,7 @@ export class GridBreweries extends Component {
             }
           </Menu>
         }
-      </Segment>
+      </div>
     )
   }
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import times from 'lodash.times';
-import Brewery from '../components/Brewery';
 import {List, Header, Icon, Menu, Tab, Divider} from 'semantic-ui-react';
+import {RenderBrewery} from '../components/RenderBrewery';
 
 class ListBreweries extends Component {
 
@@ -33,24 +33,24 @@ class ListBreweries extends Component {
     const {breweries} = this.props;
     const startIndex = page * TOTAL_PER_PAGE;
     const totalPages = Math.ceil(breweries.length / TOTAL_PER_PAGE);
-    const panes = breweries.slice(startIndex, startIndex + TOTAL_PER_PAGE).map(place => (
+    const panes = breweries.slice(startIndex, startIndex + TOTAL_PER_PAGE).map(brewery => (
       {
         menuItem: (
-          <Menu.Item key={place.id}>
+          <Menu.Item key={brewery.id}>
             <List divided animated verticalAlign='middle'>
               <List.Item>
                 <List.Content id='list-data'>
-                  <Header as='h4' id='list-header'>{place.name}</Header>
-                  <List.Description><Icon name='caret right' size='tiny' /> Type: {place.brewery_type}</List.Description>
-                  <List.Description><Icon name='caret right' size='tiny' /> {place.address}</List.Description>
+                  <Header as='h4' id='list-header'>{brewery.name}</Header>
+                  <List.Description><Icon name='caret right' size='tiny' /> Type: {brewery.brewery_type}</List.Description>
+                  <List.Description><Icon name='caret right' size='tiny' /> {brewery.address}</List.Description>
                 </List.Content>
               </List.Item>
             </List>
           </Menu.Item>
         ),
         pane: (
-          <Tab.Pane key={place.id}>
-            <Brewery brewery={place} />
+          <Tab.Pane key={brewery.id} id='br-list' style={{fontSize: '1em'}}>
+            <RenderBrewery brewery={brewery} />
           </Tab.Pane>
         )
       })

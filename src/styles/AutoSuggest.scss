@@ -2,12 +2,12 @@
 .react-autosuggest__container {
   display: inline-block;
   position: relative;
-  width: 220px;
+  width: 350px;
 }
 
 .react-autosuggest__input {
   /* display: inline-block; */
-  width: 220px;
+  width: 350px;
   height: 36px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
@@ -58,5 +58,5 @@
 }
 
 span.renderSuggestion {
-  font-size: 1em;
+  font-size: 1.2em;
 }

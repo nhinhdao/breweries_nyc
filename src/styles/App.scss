@@ -1,11 +1,14 @@
 @import './Button.scss';
-@import './variables.scss';
 @import './Body.scss';
 @import './Brewery.scss';
 @import './Header.scss';
 @import './Footer.scss';
 @import './List.scss';
 @import './AutoSuggest.scss';
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700,800);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,800);
+@import url(https://fonts.googleapis.com/css?family=Stylish:400,700,800);
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
