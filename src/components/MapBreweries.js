@@ -11,11 +11,11 @@ class MapBreweries extends Component {
     return (
       <Grid.Row>
         <Header as='h2' icon textAlign='center'>
-          <Icon name='map outline' color='blue' />
-          <Header.Content>NEW YORK BREWERIES MAP</Header.Content>
+          <Icon name='map outline' color='teal' />
+          <Header.Content className='brs-header'>NEW YORK BREWERIES MAP</Header.Content>
         </Header>
-        <Divider />
-        <div style={{height: '80vh', width: '100%'}}>
+        <Divider hidden/>
+        <div style={{height: '75vh', width: '100%'}}>
           <GoogleMapReact
             bootstrapURLKeys={{key: `${process.env.REACT_APP_GG_API}`}}
             defaultCenter={{lat: 42.165726, lng: -74.948051}}
