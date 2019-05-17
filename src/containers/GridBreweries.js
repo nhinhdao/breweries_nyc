@@ -35,11 +35,11 @@ export class GridBreweries extends Component {
     return (
       <div>
         <Header as='h2' icon textAlign='center'>
-          <Icon name='grid layout' color='blue' />
-          <Header.Content>NEW YORK BREWERIES GRID</Header.Content>
+          <Icon name='grid layout' color='teal' />
+          <Header.Content className='brs-header'>NEW YORK BREWERIES GRID</Header.Content>
         </Header>
-        <Divider />
-        <Card.Group itemsPerRow={3}>
+        <Divider hidden/>
+        <Card.Group itemsPerRow={3} className='cards'>
           {breweries.slice(startIndex, startIndex + TOTAL_PER_PAGE).map(brewery =>
             <RenderSummary brewery={brewery} key={brewery.id}/>
           )}
