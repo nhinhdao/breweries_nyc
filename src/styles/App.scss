@@ -1,13 +1,25 @@
-@import './Button.scss';
-@import './Body.scss';
+@import './Card.scss';
 @import './Brewery.scss';
 @import './Header.scss';
 @import './Footer.scss';
 @import './List.scss';
 @import './AutoSuggest.scss';
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,700,800);
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,800);
-@import url(https://fonts.googleapis.com/css?family=Stylish:400,700,800);
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url("https://fonts.googleapis.com/css?family=Lato");
+@import url("https://fonts.googleapis.com/css?family=Stylish");
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+
+  #root {
+    background: linear-gradient(rgba(64, 81, 83, 0.295), rgba(248, 248, 248, 0.342));
+  }
+}
+
 
 
 .App-logo {

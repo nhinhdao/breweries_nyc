@@ -1,0 +1,91 @@
+
+@media only screen and (min-width: 1281px) {
+  div.ui.card.card-individual{
+    height: 18vh;
+  }
+}
+
+div.column.btns {
+  padding-top: 1em;
+}
+
+
+div.ui.card.card-individual:hover {
+  transition: transform .3s;
+  transform: translateY(-.7rem);
+  box-shadow: 0 10px 20px rgba(185, 100, 3, 0.473);
+}
+
+button.ui.button.btn-individual:hover {
+  transition: transform .3s;
+  transform: translateY(.3rem);
+  box-shadow: 0 10px 20px rgba(15, 86, 119, 0.459);
+}
+
+#btn-header:hover {
+  transition: transform .3s;
+  transform: translateY(.5rem) scale(1.2);
+  box-shadow: 0 20px 20px rgba(132, 181, 204, 0.486);
+}
+
+
+/* Position and sizing of burger button */
+
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+.bm-burger-bars {
+  background: #373a47;
+}
+
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+.bm-cross {
+  background: #bdc3c7;
+}
+
+.bm-menu {
+  padding: 4em 1.5em 0;
+  background: #373a47;
+  font-size: 1.4em;
+
+  span {
+    color: #b8b7ad;
+
+    &:hover,
+    &:focus {
+      color: #d6bf58;
+    }
+  }
+}
+
+.bm-item-list span {
+  padding: 0.8em;
+
+  strong {
+    margin-left: 10px;
+    font-weight: 700;
+    font-size: 1em;
+  }
+}
+
+.bm-item:focus {
+  outline: none;
+}
+
+.barHeader {
+  color: #489793;
+  a {
+    color: #ce5829;
+  }
+  a:hover {
+    color: #d6bf58;
+  }
+}
