@@ -28,7 +28,7 @@ class ListBreweries extends Component {
   }
 
   render() {
-    const TOTAL_PER_PAGE = 7;
+    const TOTAL_PER_PAGE = 8;
     const {page} = this.state;
     const {breweries} = this.props;
     const startIndex = page * TOTAL_PER_PAGE;
@@ -58,11 +58,11 @@ class ListBreweries extends Component {
     return (
       <div>
         <Header as='h2' icon textAlign='center'>
-          <Icon name='list alternate outline' color='blue' />
-          <Header.Content>NEW YORK BREWERIES LIST</Header.Content>
+          <Icon name='list alternate outline' color='teal' />
+          <Header.Content className='brs-header'>NEW YORK BREWERIES LIST</Header.Content>
         </Header>
-        <Divider />
-        <Tab menu={{fluid: true, vertical: true}} panes={panes} renderActiveOnly={false} />
+        <Divider hidden/>
+        <Tab menu={{fluid: true, vertical: true}} panes={panes} grid={{ paneWidth: 10, tabWidth: 6 }} renderActiveOnly={false} />
         { breweries.length > TOTAL_PER_PAGE &&
           <Menu pagination size='tiny'>
             {page !== 0 &&
