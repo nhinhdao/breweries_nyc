@@ -1,72 +1,30 @@
-import React, {Component} from 'react';
-import times from 'lodash.times';
-import {Card, Menu, Icon, Divider, Header} from 'semantic-ui-react';
-import {RenderSummary} from '../components/RenderBrewery';
+import React from 'react';
+import {Card, Icon, Divider, Header} from 'semantic-ui-react';
+import {GridSummary} from '../components/RenderBrewery';
+import pagination from './Pagination';
 
-export class GridBreweries extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      page: 0
-    }
-  }
-  setPage = (page) => {
-    return () => {
-      this.setState({page});
-    };
-  }
+const DisplayGrid = props => {
 
-  decrementPage = () => {
-    const {page} = this.state;
-    this.setState({page: page - 1});
-  }
+  const {breweries, startIndex, perPage} = props;
 
-  incrementPage = () => {
-    const {page} = this.state;
-    this.setState({page: page + 1});
-  }
-
-  render() {
-    const TOTAL_PER_PAGE = 9;
-    const {page} = this.state;
-    const {breweries} = this.props;
-    const startIndex = page * TOTAL_PER_PAGE;
-    const totalPages = Math.ceil(breweries.length / TOTAL_PER_PAGE);
-    return (
-      <div>
-        <Header as='h2' icon textAlign='center'>
-          <Icon name='grid layout' color='teal' />
-          <Header.Content className='brs-header'>NEW YORK BREWERIES GRID</Header.Content>
-        </Header>
-        <Divider hidden/>
-        <Card.Group itemsPerRow={3} className='cards'>
-          {breweries.slice(startIndex, startIndex + TOTAL_PER_PAGE).map(brewery =>
-            <RenderSummary brewery={brewery} key={brewery.id}/>
-          )}
-        </Card.Group>
-        <Divider hidden />
-        { breweries.length > TOTAL_PER_PAGE &&
-          <Menu floated="right" pagination size='tiny'>
-            {page !== 0 &&
-              <Menu.Item as="a" icon onClick={this.decrementPage}>
-                <Icon name="left chevron" />
-              </Menu.Item>
-            }
-            {times(totalPages, n =>
-              (<Menu.Item as="a" key={n} active={n === page} onClick={this.setPage(n)}>
-                {n + 1}
-              </Menu.Item>),
-            )}
-            {page !== (totalPages - 1) &&
-              <Menu.Item as="a" icon onClick={this.incrementPage}>
-                <Icon name="right chevron" />
-              </Menu.Item>
-            }
-          </Menu>
-        }
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Header as='h2' icon textAlign='center'>
+        <Icon name='grid layout' color='teal' />
+        <Header.Content className='brs-header'>NEW YORK BREWERIES GRID</Header.Content>
+      </Header>
+      <Divider hidden />
+      {/* display breweries by sumary card */}
+      <Card.Group itemsPerRow={3} className='cards'>
+        {breweries.slice(startIndex, startIndex + perPage).map(brewery =>
+          <GridSummary brewery={brewery} key={brewery.id} />
+        )}
+      </Card.Group>
+      <Divider hidden />
+    </div>
+  )
 }
 
+const GridBreweries = pagination(DisplayGrid, 9);
+    
 export default GridBreweries;
