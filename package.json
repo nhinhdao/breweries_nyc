@@ -1,7 +1,7 @@
 {
   "name": "breweries_nyc",
   "version": "0.1.0",
-  "private": true,
+  "private": true, 
   "dependencies": {
     "@microlink/react": "^4.0.1",
     "axios": "^0.18.0",
