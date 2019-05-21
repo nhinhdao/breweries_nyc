@@ -3,6 +3,7 @@ import logo from '../logo.svg';
 import {Link} from 'react-router-dom';
 import {Segment, Container, Header, Button, Icon, Menu} from 'semantic-ui-react';
 
+// footer
 export function MyFooter() {
   return (
     <Segment vertical className='myFooter'>
@@ -14,6 +15,7 @@ export function MyFooter() {
   )
 }
 
+// header
 export function MyHeader() {
 
   return (
@@ -27,7 +29,7 @@ export function MyHeader() {
   )
 }
 
-
+//stickymenu (replaces by burger bar)
 export function StickyMenu() {
 
   return (
