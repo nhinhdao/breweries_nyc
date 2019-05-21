@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
 
+//component to display name on autosuggestion
 class NameSuggestion extends Component {
-  constructor () {
-    super();
-    this.state = {
-      value: '',
-      suggestions: []
+  state = {
+      value: '', //name when user type
+      suggestions: [] //list of name returned by API autocomplete
     };
-  }
 
   // pass input value to async fetch and setstate with returned data
   getSuggestions = (value) => {
@@ -17,20 +15,28 @@ class NameSuggestion extends Component {
     axios.get(`https://api.openbrewerydb.org/breweries?by_state=new_york&by_name=${input}`)
       .then(res => {
         if (res.data.length === 0) {
-          this.setState({suggestions: [{isAddNew: true}]})
+          this.setState({
+            suggestions: [{
+              notFound: true
+            }]
+          })
         }
         else {
-          this.setState({suggestions: res.data})
+          this.setState({
+            suggestions: res.data
+          })
         }
       })
       .catch(error => {
-        this.setState({suggestions: []})
+        this.setState({
+          suggestions: []
+        })
       })
   };
 
   // get the name value of the suggestion
   getSuggestionValue = suggestion => {
-    if (suggestion.isAddNew) {
+    if (suggestion.notFound) {
       return `Name not found: ${this.state.value}`;
     }
     return suggestion.name;
@@ -38,7 +44,7 @@ class NameSuggestion extends Component {
 
   // render suggestions and give it some style.
   renderSuggestion = suggestion => {
-    if (suggestion.isAddNew) {
+    if (suggestion.notFound) {
       return (
         <span>
           <strong>{this.state.value}</strong>
@@ -52,6 +58,7 @@ class NameSuggestion extends Component {
     );
   };
 
+  //name change on type
   onChange = (event, {newValue}) => {
     this.setState({
       value: newValue
@@ -70,9 +77,10 @@ class NameSuggestion extends Component {
     });
   };
 
+  //fired when user click (select) a name from the suggestion box
   onSuggestionSelected = (_event, {suggestion}) => {
     const input = document.getElementsByClassName('react-autosuggest__input')[0];
-    if (suggestion.isAddNew) {
+    if (suggestion.notFound) {
       // debugger
       input.style.cssText = "color: red; border: 1px solid red";
     }

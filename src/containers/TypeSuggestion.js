@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Dropdown} from 'semantic-ui-react';
 
+//component display a dropdown box of all types
 class TypeSuggestion extends Component {
 
+  //fire when user click on a type from the dropdown box
   handleChange = (e, { value}) => {
     this.props.searchByType(value)
   }

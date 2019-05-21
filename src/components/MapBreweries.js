@@ -4,6 +4,7 @@ import {Grid, Header, Icon, Divider} from 'semantic-ui-react';
 import GoogleMapReact from 'google-map-react';
 import {Marker} from '../components/RenderBrewery';
 
+// component to render all breweries on a big map with markers
 class MapBreweries extends Component {
 
   render() {
