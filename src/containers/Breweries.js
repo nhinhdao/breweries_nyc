@@ -24,58 +24,118 @@ class GetBreweries extends Component {
       byGrid: true,
       menuOpen: false,
     };
-    this.searchByType = this.searchByType.bind(this);
-    this.setBreweryOnNameSuggestion = this.setBreweryOnNameSuggestion.bind(this);
   }
 
-  async componentDidMount() {
-    await this.props.getNYCBreweries();
-    this.setState({breweries: this.props.breweries})
+  // get all nyc breweries when component mounted
+  componentDidMount() {
+    // await this.props.getNYCBreweries();
+    this.NYCbreweries = this.props.breweries;
+    this.setState({
+      breweries: this.props.breweries
+    });
   }
 
+  //handle open or close burger bar
   handleStateChange = (state) => {
-    this.setState({menuOpen: state.isOpen})
+    this.setState({
+      menuOpen: state.isOpen
+    })
   }
 
+  // toggle search box for name
   toggleSearchName = () => {
-    this.setState({byName: true, byType: false, menuOpen: false})
+    this.setState({
+      byName: true,
+      byType: false,
+      menuOpen: false
+    })
   }
 
+  // toggle search box for type
   toggleSearchType = () => {
-    this.setState({byName: false, byType: true, menuOpen: false})
+    this.setState({
+      byName: false,
+      byType: true,
+      menuOpen: false
+    })
   }
 
-  async searchByType(type) {
+  //handle search by type
+  searchByType = async(type) => {
     await this.props.searchBreweriesByType(type);
-    this.setState({brewery: null, breweries: this.props.breweries, byList: true, byMap: false, byGrid: false})
+    this.setState({
+      brewery: null,
+      breweries: this.props.breweries,
+      byList: true,
+      byMap: false,
+      byGrid: false
+    })
   }
 
-  async setBreweryOnNameSuggestion(brewery){
+  //show name suggestion 
+  setBreweryOnNameSuggestion = async(brewery) => {
     await this.props.setBrewery(brewery)
     const {breweryByName} = this.props
-    this.setState({brewery: breweryByName, byMap: false, byList: false, byGrid: false})
+    this.setState({
+      brewery: breweryByName,
+      breweries: this.NYCbreweries,
+      byMap: false,
+      byList: false,
+      byGrid: false
+    })
   }
 
+  // get brewery when user click on a name
   getBreweryOnClick = (id) => {
     const place = this.state.breweries.find(place => place.id === id)
-    this.setState({brewery: place})
+    this.setState({
+      brewery: place
+    })
   }
 
+  // render all breweries by map
   getMap = () => {
-    this.setState({brewery: null, byMap: true, byList: false, byGrid: false, byName: false, byType: false, menuOpen: false})
+    this.setState({
+      brewery: null,
+      byMap: true,
+      byList: false,
+      byGrid: false,
+      byName: false,
+      byType: false,
+      menuOpen: false
+    })
   }
 
+  // handle all breweries by list
   getList = () => {
-    this.setState({brewery: null, byList: true, byGrid: false, byMap: false, byName: false, byType: false, menuOpen: false})
+    this.setState({
+      brewery: null,
+      byList: true,
+      byGrid: false,
+      byMap: false,
+      byName: false,
+      byType: false,
+      menuOpen: false
+    })
   }
 
+  // handle all breweries by grid
   getGrid = () => {
-    this.setState({brewery: null, byGrid: true, byMap: false, byList: false, byName: false, byType: false, menuOpen: false})
+    this.setState({
+      brewery: null,
+      byGrid: true,
+      byMap: false,
+      byList: false,
+      byName: false,
+      byType: false,
+      menuOpen: false
+    })
   }
 
   render() {
     return (
       <div id='outer-container'>
+        {/* burger bar */}
         <div>
           <Menu disableAutoFocus isOpen={this.state.menuOpen} onStateChange={(state) => this.handleStateChange(state)}>
             <h2 className='barHeader'><Link to='/'>HOME</Link></h2>
@@ -91,22 +151,31 @@ class GetBreweries extends Component {
         <Container id='listBreweries'>
           <Grid>
             <Grid.Row textAlign='center' className='searchPage' >
+              {/* search box show off for name or type */}
               <Grid.Column className='btns'>
-                {this.state.byName && <NameSuggestion setBrewery={this.setBreweryOnNameSuggestion} />}
-                {this.state.byType && <TypeSuggestion searchByType={this.searchByType} />}
+                { this.state.byName &&
+                  <NameSuggestion setBrewery={this.setBreweryOnNameSuggestion} />
+                }
+                {this.state.byType &&
+                  <TypeSuggestion searchByType={this.searchByType} />
+                }
               </Grid.Column>
             </Grid.Row>
-            { this.state.byMap &&
-              <MapBreweries breweries={this.state.breweries} />
-            }
+              {/* display breweries by map */}
+              { this.state.byMap &&
+                <MapBreweries breweries={this.state.breweries} />
+              }
             <Grid.Row centered stretched id='br-search'>
               <Grid.Column width={16}>
+                {/* display brewery when user search for name */}
                 {this.state.brewery &&
                   <RenderBrewery brewery={this.state.brewery} />
                 }
+                {/* display breweries by grid */}
                 {this.state.byGrid &&
                   <GridBreweries breweries={this.state.breweries} />
                 }
+                {/* display breweries by list */}
                 {this.state.byList &&
                   <ListBreweries breweries={this.state.breweries} />
                 }
@@ -119,7 +188,7 @@ class GetBreweries extends Component {
   }
 }
 
-
+//access global store
 const mapStateToProps = state => {
   return {
     breweries: state.breweries,
@@ -127,6 +196,7 @@ const mapStateToProps = state => {
   }
 }
 
+//access dispatch functions to update store
 const mapDispatchToProps = dispatch => {
   return {
     getNYCBreweries: () => dispatch(getNYCBreweries()),
