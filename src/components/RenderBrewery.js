@@ -1,8 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import GoogleMapReact from 'google-map-react';
-import {Feed, Header, Icon, Popup, Card, Label, Grid} from 'semantic-ui-react';
+import {Feed, Header, Icon, Popup, Card, Label, Grid, List, Menu} from 'semantic-ui-react';
 
+// function component to render a single brewery with map (when user click on a list)
 export function RenderBrewery({brewery}) {
   return (
     <Grid>
@@ -30,7 +31,9 @@ export function RenderBrewery({brewery}) {
   )
 }
 
-export function RenderSummary({brewery}) {
+
+//function component to render summary card on grid
+export function GridSummary({brewery}) {
   return (
     <Card className='card-individual'>
       <Card.Content>
@@ -54,7 +57,26 @@ export function RenderSummary({brewery}) {
   )
 }
 
-export function RenderPopup({brewery}) {
+//function component to render summary on list
+export function ListSummary({brewery}) {
+  return (
+    <Menu.Item key={brewery.id}>
+      <List divided animated verticalAlign='middle'>
+        <List.Item>
+          <List.Content id='list-data'>
+            <Header as='h4' id='list-header'>{brewery.name}</Header>
+            <List.Description><Icon name='caret right' size='tiny' /> Type: {brewery.brewery_type}</List.Description>
+            <List.Description><Icon name='caret right' size='tiny' /> {brewery.address}</List.Description>
+          </List.Content>
+        </List.Item>
+      </List>
+    </Menu.Item>
+  )
+}
+
+
+//function component to render popup when user click on a marker
+export function MapPopup({brewery}) {
 
   return (
     <Feed>
@@ -76,12 +98,13 @@ export function RenderPopup({brewery}) {
 }
 
 
+// marker style for rendering on a big map
 export function Marker({brewery}) {
   return (
     <Popup
       trigger={<Icon size='big' color='red' name='map marker alternate' />}
       content={
-        <RenderPopup brewery={brewery} />
+        <MapPopup brewery={brewery} />
       }
       on='click'
       wide='very'
@@ -91,11 +114,12 @@ export function Marker({brewery}) {
   )
 }
 
+// google map for a single brewery
 export function GoogleMap({brewery}) {
 
   const text = brewery.name.split(" ").slice(0, 2).join(" ") //Short name to show on map marker;
 
-  //Marker to show brewery name on map
+  //Marker to show brewery name on map on a single brewery
   const Marker = ({text}) => <Label size='tiny' color='blue' pointing>{text}</Label>;
 
   return (
