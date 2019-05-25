@@ -19,7 +19,7 @@ class App extends Component {
       <div className="App">
         <Router>
           <Switch>
-            <Route exact path="/breweries/:breweryID" component={LinkToBrewery} />
+            <Route exact path="/breweries/:breweryCODE" component={LinkToBrewery} />
             <Route exact path="/breweries" component={Breweries} />
             <Route exact path="/" component={MyHeader} />
           </Switch>

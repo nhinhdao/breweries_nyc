@@ -2,18 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import nycBreweriesReducer from './reducers/nycBreweriesReducer';
-import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
 import 'semantic-ui-css/semantic.min.css';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from './store/store';
 require('dotenv').config();
-
-const store = createStore(nycBreweriesReducer, applyMiddleware(thunk))
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root'));
 
