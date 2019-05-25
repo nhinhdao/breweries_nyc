@@ -23,10 +23,10 @@ class LinkToBrewery extends Component {
     }
   }
   
-  //get brewery based on ID from browser
+  //get brewery based on CODE from browser
   getBrewery = async () => {
-    const id = this.props.match.params.breweryID;
-    await this.props.searchBreweriesByID(id);
+    const code = this.props.match.params.breweryCODE;
+    await this.props.searchBreweriesByID(code);
     this.setState({
       brewery: this.props.brewery
     })
@@ -35,8 +35,9 @@ class LinkToBrewery extends Component {
   //get brewery index in the store to display previous or next brewery on click
   getCurrentBreweryIndex = () => {
     const {breweries} = this.props;
-    const id = this.state.brewery.id;
-    return breweries.findIndex(brewery => brewery.id === id)
+    const {brewery} = this.state;
+    // console.log(`Current code: ${code}`);
+    return breweries.findIndex(br => br.name === brewery.name)
   }
 
   // get next brewery
@@ -45,8 +46,9 @@ class LinkToBrewery extends Component {
     const index = this.getCurrentBreweryIndex() + 1;
     // debugger
     if (index < breweries.length) {
-      const nextID = breweries[index].id;
-      history.push(`/breweries/${nextID}`);
+      const nextCode = breweries[index].code ? breweries[index].code : breweries[index].id;
+      // console.log(`Next Index: ${index} Next code: ${nextCode}`);
+      history.push(`/breweries/${nextCode}`);
     }
   }
 
@@ -55,8 +57,9 @@ class LinkToBrewery extends Component {
     const {breweries, history} = this.props;
     const index = this.getCurrentBreweryIndex() - 1;
     if (index >= 0) {
-      const previousID = breweries[index].id;
-      history.push(`/breweries/${previousID}`);
+      const previousCode = breweries[index].code ? breweries[index].code : breweries[index].id;
+      // console.log(`Previous index: ${index} Previous code: ${previousCode}`);
+      history.push(`/breweries/${previousCode}`);
     }
   }
 

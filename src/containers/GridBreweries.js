@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Card, Icon, Divider, Header} from 'semantic-ui-react';
 import {GridSummary} from '../components/RenderBrewery';
 import pagination from './Pagination';
@@ -6,7 +7,6 @@ import pagination from './Pagination';
 const DisplayGrid = props => {
 
   const {breweries, startIndex, perPage} = props;
-
   return (
     <div>
       <Header as='h2' icon textAlign='center'>
@@ -23,6 +23,12 @@ const DisplayGrid = props => {
       <Divider hidden />
     </div>
   )
+}
+
+DisplayGrid.propTypes = {
+  breweries: PropTypes.array.isRequired,
+  startIndex: PropTypes.number,
+  perPage: PropTypes.number
 }
 
 const GridBreweries = pagination(DisplayGrid, 9);

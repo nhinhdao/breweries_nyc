@@ -6,14 +6,16 @@ import TypeSuggestion from './TypeSuggestion';
 import {Grid, Container} from 'semantic-ui-react';
 import GridBreweries from './GridBreweries';
 import {slide as Menu} from 'react-burger-menu';
-import {searchBreweriesByType, getNYCBreweries} from '../actions/HandleAPIs';
 import ListBreweries from './ListBreweries';
 import MapBreweries from '../components/MapBreweries';
 import {RenderBrewery} from '../components/RenderBrewery';
+import {searchBreweriesByType, getNYCBreweries} from '../actions/HandleAPIs';
 
-class GetBreweries extends Component {
-  constructor () {
-    super();
+//Center component handled display breweries based on actions on burger bar
+class Breweries extends Component {
+  constructor (props) {
+    super(props);
+    this.mounted = true;
     this.state = {
       breweries: [],
       brewery: null,
@@ -28,12 +30,29 @@ class GetBreweries extends Component {
 
   // get all nyc breweries when component mounted
   componentDidMount() {
-    // await this.props.getNYCBreweries();
+    this.mounted = true;
     this.NYCbreweries = this.props.breweries;
     this.setState({
       breweries: this.props.breweries
     });
   }
+
+  //handle persist data on refresh
+  // async componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.breweries !== this.props.breweries) {
+  //     // debugger;
+  //     this.mounted = true;
+  //     await this.props.getNYCBreweries();
+  //     this.setState({
+  //       breweries: this.props.breweries
+  //     });
+  //   }
+  // }
+
+  // //cancel async call when component unmount
+  // componentWillUnmount() {
+  //   this.mounted = false;
+  // }
 
   //handle open or close burger bar
   handleStateChange = (state) => {
@@ -205,4 +224,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GetBreweries);
+export default connect(mapStateToProps, mapDispatchToProps)(Breweries);

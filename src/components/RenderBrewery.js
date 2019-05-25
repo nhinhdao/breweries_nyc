@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import GoogleMapReact from 'google-map-react';
-import {Feed, Header, Icon, Popup, Card, Label, Grid, List, Menu} from 'semantic-ui-react';
+import {Feed, Header, Icon, Popup, Card, Label, Grid, List} from 'semantic-ui-react';
 
 // function component to render a single brewery with map (when user click on a list)
 export function RenderBrewery({brewery}) {
+  // debugger;
   return (
     <Grid>
       <Header className='br-header' textAlign='center'>{brewery.name}</Header>
@@ -37,7 +38,7 @@ export function GridSummary({brewery}) {
   return (
     <Card className='card-individual'>
       <Card.Content>
-        <Link to={`/breweries/${brewery.id}`}>
+        <Link to={brewery.code ? `/breweries/${brewery.code}` : `/breweries/${brewery.id}`}>
           <Header className='gr-header'>{brewery.name}</Header>
           <div style={{color: '#504f4d'}}>
             <Card.Description>
@@ -49,7 +50,7 @@ export function GridSummary({brewery}) {
           </div>
         </Link>
         <Card.Description>
-          <Icon name='map marker alternate' />{" "}
+          <Icon name='linkify' />{" "}
           {(brewery.website_url === 'N/A') ? 'N/A' : <a href={`${brewery.website_url}`} rel="noopener noreferrer" target='_blank'>{brewery.website_url}</a>}
         </Card.Description>
       </Card.Content>
@@ -60,17 +61,15 @@ export function GridSummary({brewery}) {
 //function component to render summary on list
 export function ListSummary({brewery}) {
   return (
-    <Menu.Item key={brewery.id}>
-      <List divided animated verticalAlign='middle'>
-        <List.Item>
-          <List.Content id='list-data'>
-            <Header as='h4' id='list-header'>{brewery.name}</Header>
-            <List.Description><Icon name='caret right' size='tiny' /> Type: {brewery.brewery_type}</List.Description>
-            <List.Description><Icon name='caret right' size='tiny' /> {brewery.address}</List.Description>
-          </List.Content>
-        </List.Item>
-      </List>
-    </Menu.Item>
+    <List divided animated verticalAlign='middle'>
+      <List.Item>
+        <List.Content id='list-data'>
+          <Header as='h4' id='list-header'>{brewery.name}</Header>
+          <List.Description><Icon name='caret right' size='tiny' /> Type: {brewery.brewery_type}</List.Description>
+          <List.Description><Icon name='caret right' size='tiny' /> {brewery.address}</List.Description>
+        </List.Content>
+      </List.Item>
+    </List>
   )
 }
 

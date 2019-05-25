@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Grid, Header, Icon, Divider} from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
 import {Marker} from '../components/RenderBrewery';
+import {Grid, Header, Icon, Divider} from 'semantic-ui-react';
 
 // component to render all breweries on a big map with markers
 class MapBreweries extends Component {
@@ -30,6 +31,10 @@ class MapBreweries extends Component {
       </Grid.Row>
     )
   }
+}
+
+MapBreweries.propTypes = {
+  breweries: PropTypes.array,
 }
 
 
