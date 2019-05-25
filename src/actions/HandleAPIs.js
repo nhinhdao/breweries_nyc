@@ -29,8 +29,8 @@ export function searchBreweriesByType(type) {
 }
 
 //dispatch brewery by name to store
-export function searchBreweriesByID(id) {
-  const url = `https://api.openbrewerydb.org/breweries/${id}`
+export function searchBreweriesByID(code) {
+  const url = `https://api.openbrewerydb.org/breweries/${code}`
   return dispatch => {
     dispatch({type: "LOADING_QUERY"});
     return axios.get(url)
