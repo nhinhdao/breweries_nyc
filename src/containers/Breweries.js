@@ -37,23 +37,6 @@ class Breweries extends Component {
     });
   }
 
-  //handle persist data on refresh
-  // async componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.breweries !== this.props.breweries) {
-  //     // debugger;
-  //     this.mounted = true;
-  //     await this.props.getNYCBreweries();
-  //     this.setState({
-  //       breweries: this.props.breweries
-  //     });
-  //   }
-  // }
-
-  // //cancel async call when component unmount
-  // componentWillUnmount() {
-  //   this.mounted = false;
-  // }
-
   //handle open or close burger bar
   handleStateChange = (state) => {
     this.setState({
